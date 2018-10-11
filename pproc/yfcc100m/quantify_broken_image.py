@@ -10,6 +10,7 @@ s_tags = ','
 def main():
   print('quantitatively estimate the number of broken images')
 
+  tag_count = {}
   t_line = 0
   with open(dataset_infile) as fin:
     while True:
@@ -23,9 +24,10 @@ def main():
       if fields[i_marker] != '0':
         continue
 
-      print(fields)
-
-      user_tags = fields[i_tags].split(s_tags)
+      tags = fields[i_tags].split(s_tags)
+      for tag in tags:
+        tag_count[tag] = tag_count.get(tag, 0) + 1
+      print(tag_count)
       input()
 
       t_line += 1
