@@ -1,8 +1,10 @@
+from operator import itemgetter
 
 def main():
   print('miscellaneous test')
 
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_rnd/yfcc_rnd.data'
+  tag_count = {}
   with open(file) as fin:
     while True:
       line = fin.readline()
@@ -11,8 +13,12 @@ def main():
 
       fields = line.strip().split('\t')
       tags = fields[-1].split()
-      print(tags)
-      input()
+      for tag in tags:
+        tag_count[tag] = tag_count.get(tag, 0) + 1
+
+  tag_count = sorted(tag_count.items(), key=itemgetter(1), reverse=True)
+  for tag, count in tag_count:
+    print('%s\t%d\n' % (tag, count))
 
 if __name__ == '__main__':
   main()
