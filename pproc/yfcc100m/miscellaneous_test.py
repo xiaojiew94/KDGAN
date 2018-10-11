@@ -9,7 +9,9 @@ def main():
       if not line:
         break
 
-      print(line)
+      fields = line.strip().split('\t')
+      tags = fields[-1].split()
+      print(tags)
       input()
 
 if __name__ == '__main__':
