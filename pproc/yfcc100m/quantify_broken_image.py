@@ -1,7 +1,6 @@
 from nltk.corpus import wordnet
 from operator import itemgetter
 from sys import stdout
-from urllib import parse
 
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
 tag_file = '/data/yfcc100m/yfcc100m_tag'
@@ -11,7 +10,7 @@ i_tags = 10
 i_marker = 24
 
 s_tags = ','
-
+s_tag = '+'
 
 def main():
   print('quantitatively estimate the number of broken images')
@@ -33,8 +32,7 @@ def main():
         continue
       tags = fields[i_tags].split(s_tags)
       for tag in tags:
-        tag = parse.unquote(tag)
-        stdout.write('%s: %s\n' % (tag, ' -- '.join(tag.split())))
+        stdout.write('%s: %s\n' % (tag, ' -- '.join(tag.split(s_tag))))
         input()
         tag_count[tag] = tag_count.get(tag, 0) + 1
 
