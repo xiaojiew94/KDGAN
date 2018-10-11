@@ -32,8 +32,6 @@ def main():
       for tag in tags:
         tag_count[tag] = tag_count.get(tag, 0) + 1
 
-      if t_line == 666:
-        break
       t_line += 1
       if (t_line % 5000000) == 0:
         print('line#%09d' % (t_line))
@@ -43,7 +41,6 @@ def main():
   with open(tag_file, 'w') as fout:
     for tag, count in tag_count:
       fout.write('%s\t%d\n' % (tag, count))
-
 
 if __name__ == '__main__':
   main()
