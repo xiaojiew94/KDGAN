@@ -14,6 +14,13 @@ i_marker = 24
 s_tags = ','
 s_tag = '+'
 
+def is_valid(word):
+  valid = True
+  if (not wordnet.synsets(word) or
+      any(c not in string.ascii_lowercase + '-' for c in word)):
+    valid = False
+  return valid
+
 def main():
   print('quantitatively estimate the number of broken images')
 
@@ -38,8 +45,7 @@ def main():
         words = tag.split(s_tag)
         valid = True
         for word in words:
-          if (not wordnet.synsets(word) or
-              any(c not in string.ascii_lowercase + '-' for c in word)):
+          if not is_valid(word):
             valid = False
             break
         print('%s:%s' % (tag, valid))
