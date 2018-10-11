@@ -32,9 +32,10 @@ def main():
       for tag in tags:
         tag_count[tag] = tag_count.get(tag, 0) + 1
 
+      if t_line == 666:
+        break
       t_line += 1
       if (t_line % 5000000) == 0:
-        break
         print('line#%09d' % (t_line))
   print('%s contains %d lines in total' % (dataset_file, t_line))
 
