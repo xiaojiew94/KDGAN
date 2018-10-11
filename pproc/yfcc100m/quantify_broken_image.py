@@ -10,6 +10,10 @@ def main():
       if not line:
         break
 
+      fields = line.strip().split('\t')
+      print(len(fields))
+      exit()
+
       t_line += 1
       if (t_line % 1000000) == 0:
         print('line#%09d' % (t_line))
