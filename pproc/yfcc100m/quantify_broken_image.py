@@ -1,6 +1,6 @@
 from nltk.corpus import wordnet
 from operator import itemgetter
-from os import stdout
+from sys import stdout
 from urllib import parse
 
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
