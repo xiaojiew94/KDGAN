@@ -23,10 +23,9 @@ def main():
 
       if fields[i_marker] != '0': # not image
         continue
-      if len(s_tags) == 0: # no tags
+      if len(fields[i_tags]) == 0: # no tags
         continue
       tags = fields[i_tags].split(s_tags)
-      print(len(s_tags), tags)
       for tag in tags:
         tag_count[tag] = tag_count.get(tag, 0) + 1
       print(tag_count)
