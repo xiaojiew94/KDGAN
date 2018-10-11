@@ -12,7 +12,7 @@ def main():
         break
 
       fields = line.strip().split('\t')
-      assert fields == n_field
+      assert len(fields) == n_field
 
       t_line += 1
       if (t_line % 5000000) == 0:
