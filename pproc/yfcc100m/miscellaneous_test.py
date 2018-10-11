@@ -4,7 +4,7 @@ def main():
   print('miscellaneous test')
 
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_rnd/yfcc_rnd.data'
-  file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_top/yfcc10k.data'
+  # file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_top/yfcc10k.data'
   tag_count = {}
   with open(file) as fin:
     while True:
