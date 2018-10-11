@@ -1,6 +1,9 @@
 dataset_infile = '/data/yfcc100m/yfcc100m_dataset'
 n_field = 25
 
+i_user_tags = 10
+s_user_tags = ','
+
 def main():
   print('quantitatively estimate the number of broken images')
 
@@ -13,6 +16,10 @@ def main():
 
       fields = line.strip().split('\t')
       assert len(fields) == n_field
+
+      user_tags = fields[i_user_tags]
+      print(user_tags.split(s_user_tags))
+      input()
 
       t_line += 1
       if (t_line % 5000000) == 0:
