@@ -1,4 +1,3 @@
-miscellaneous test
 church	390
 bridge	382
 dog	289
