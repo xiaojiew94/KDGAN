@@ -1,10 +1,9 @@
 from operator import itemgetter
 
 def main():
-  print('miscellaneous test')
-
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_rnd/yfcc_rnd.data'
   # file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_top/yfcc10k.data'
+  # print('miscellaneous test')
   tag_count = {}
   with open(file) as fin:
     while True:
