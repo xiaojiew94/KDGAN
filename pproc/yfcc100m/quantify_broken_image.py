@@ -32,7 +32,15 @@ def main():
         continue
       tags = fields[i_tags].split(s_tags)
       for tag in tags:
-        stdout.write('%s: %s\n' % (tag, ' -- '.join(tag.split(s_tag))))
+        tag = tag.lower()
+        words = tag.split(s_tag)
+        valid = True
+        for word in words:
+          if (not wordnet.synsets(word) or
+              any(c not in string.ascii_lowercase + '-' for c in word)):
+            valid = False
+            break
+        print('%s:%s' % (tag, valid))
         input()
         tag_count[tag] = tag_count.get(tag, 0) + 1
 
