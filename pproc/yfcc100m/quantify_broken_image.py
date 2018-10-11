@@ -7,12 +7,14 @@ import string
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
 tag_file = '/data/yfcc100m/yfcc100m_tag'
 
-n_field = 25
-i_tags = 10
-i_marker = 24
+sup_tag = 20
 
-s_tags = ','
-s_tag = '+'
+num_field = 25
+idx_field = 10
+idx_marker = 24
+
+sep_tags = ','
+sep_tag = '+'
 
 def is_valid(word):
   valid = True
@@ -33,26 +35,27 @@ def main():
         break
 
       fields = line.strip().split('\t')
-      assert len(fields) == n_field
+      assert len(fields) == num_field
 
-      if fields[i_marker] != '0': # not image
+      if fields[idx_marker] != '0': # not image
         continue
-      if len(fields[i_tags]) == 0: # no tags
+      if len(fields[idx_field]) == 0: # no tags
         continue
-      tags = fields[i_tags].split(s_tags)
+      tags = fields[idx_field].split(sep_tags)
       for tag in tags:
         tag = tag.lower()
-        words = tag.split(s_tag)
+        words = tag.split(sep_tag)
         valid = True
         for word in words:
           if not is_valid(word):
             valid = False
             break
-        print('%s:%s' % (tag, valid))
-        input()
-        tag_count[tag] = tag_count.get(tag, 0) + 1
+        if valid:
+          tag_count[tag] = tag_count.get(tag, 0) + 1
 
       t_line += 1
+      if t_line == 666:
+        break
       if (t_line % 5000000) == 0:
         print('line#%09d' % (t_line))
   print('%s contains %d lines in total' % (dataset_file, t_line))
@@ -60,6 +63,8 @@ def main():
   tag_count = sorted(tag_count.items(), key=itemgetter(1), reverse=True)
   with open(tag_file, 'w') as fout:
     for tag, count in tag_count:
+      if count < sup_tag:
+        break
       fout.write('%s\t%d\n' % (tag, count))
 
 if __name__ == '__main__':
