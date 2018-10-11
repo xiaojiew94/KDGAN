@@ -1,4 +1,5 @@
 dataset_infile = '/data/yfcc100m/yfcc100m_dataset'
+n_field = 25
 
 def main():
   print('quantitatively estimate the number of broken images')
@@ -11,11 +12,10 @@ def main():
         break
 
       fields = line.strip().split('\t')
-      print(len(fields))
-      exit()
+      assert fields == n_field
 
       t_line += 1
-      if (t_line % 1000000) == 0:
+      if (t_line % 5000000) == 0:
         print('line#%09d' % (t_line))
   print('%s contains %d lines in total' % (dataset_infile, t_line))
 
