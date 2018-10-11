@@ -2,6 +2,8 @@ from nltk.corpus import wordnet
 from operator import itemgetter
 from sys import stdout
 
+import string
+
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
 tag_file = '/data/yfcc100m/yfcc100m_tag'
 
