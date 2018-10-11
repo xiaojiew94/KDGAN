@@ -11,8 +11,8 @@ def main():
         break
 
       t_line += 1
-      if (t_line % 10000) == 0:
-        print('line#%07d' % (t_line))
+      if (t_line % 1000000) == 0:
+        print('line#%09d' % (t_line))
   print('%s contains %d lines in total' % (dataset_infile, t_line))
 
 if __name__ == '__main__':
