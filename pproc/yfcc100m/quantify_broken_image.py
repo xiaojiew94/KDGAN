@@ -23,6 +23,8 @@ def main():
 
       if fields[i_marker] != '0':
         continue
+      if len(s_tags) == 0:
+        continue
 
       tags = fields[i_tags].split(s_tags)
       for tag in tags:
