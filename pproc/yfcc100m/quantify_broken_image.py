@@ -21,12 +21,12 @@ def main():
       fields = line.strip().split('\t')
       assert len(fields) == n_field
 
-      if fields[i_marker] != '0':
+      if fields[i_marker] != '0': # not image
         continue
-      if len(s_tags) == 0:
+      if len(s_tags) == 0: # no tags
         continue
-
       tags = fields[i_tags].split(s_tags)
+      print(len(s_tags), tags)
       for tag in tags:
         tag_count[tag] = tag_count.get(tag, 0) + 1
       print(tag_count)
