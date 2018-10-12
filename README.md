@@ -15,6 +15,10 @@ sudo chmod -R ugo+rw /data
 
 ### YFCC100M
 
+wget http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz
+gunzip worldcitiespop.txt.gz
+file -i worldcitiespop.txt
+
 00 Line number  
 01 Photo/video identifier  
 02 Photo/video hash  
