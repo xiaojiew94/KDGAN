@@ -24,8 +24,17 @@ def is_valid(word):
   return valid
 
 def main():
-  print('quantitatively estimate the number of broken images')
+  tags = []
+  with open(tag_file) as fin:
+    while True:
+      line = fin.readline()
+      if not line:
+        break
 
+      tag = line.strip().split()[0]
+      print(tag)
+
+def test():
   tag_count = {}
   t_line = 0
   with open(dataset_file) as fin:
