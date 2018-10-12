@@ -1,6 +1,11 @@
+from nltk.corpus import wordnet
 from operator import itemgetter
 
+wn_nouns = {synset.name().split('.')[0] for synset in wordnet.all_synsets('n')}
 def main():
+  
+
+def test():
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_rnd/yfcc_rnd.data'
   # file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_top/yfcc10k.data'
   # print('miscellaneous test')

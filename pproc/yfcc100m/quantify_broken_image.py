@@ -32,7 +32,7 @@ def is_valid(tag):
   return True
 
 def main():
-  count = 0
+  num_tag = 0
   tags = []
   with open(tag_file) as fin:
     while True:
@@ -40,16 +40,18 @@ def main():
       if not line:
         break
 
-      tag = line.strip().split()[0]
+      fields = line.strip().split()
+      tag, count = fields[0], int(fields[1])
+
       valid = is_valid(tag)
       if valid:
-        count += 1
+        num_tag += 1
         tags.append(tag)
-  assert count == len(tags)
+  assert num_tag == len(tags)
   with open(tmp_file, 'w') as fout:
     for tag in tags:
       fout.write('%s\n' % (tag))
-  print('%d valid tags' % (count))
+  print('%d valid tags' % (num_tag))
 
 def test():
   tag_count = {}
