@@ -32,7 +32,11 @@ def main():
       fields = line.strip().split()
       tag, count = fields[0], int(fields[1])
 
-      valid = tag in unamb_nouns
+      valid = True
+      if count < 100:
+        valid = False
+      if not tag in unamb_nouns:
+        valid = False
       if valid:
         num_tag += 1
         tags.append(tag)
