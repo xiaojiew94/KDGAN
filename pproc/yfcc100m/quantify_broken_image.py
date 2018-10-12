@@ -33,7 +33,7 @@ def main():
       tag, count = fields[0], int(fields[1])
 
       valid = True
-      if count < 100:
+      if count < 400:
         valid = False
       if not tag in unamb_nouns:
         valid = False
