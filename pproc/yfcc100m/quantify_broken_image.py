@@ -2,6 +2,7 @@ from nltk.corpus import wordnet
 from operator import itemgetter
 from sys import stdout
 
+import pickle
 import string
 
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
@@ -18,13 +19,7 @@ sep_tag = ','
 sep_word = '+'
 
 def main():
-  unamb_nouns = set()
-  wn_nouns = {synset.name().split('.')[0] for synset in wordnet.all_synsets('n')}
-  for noun in wn_nouns:
-    # print('%s:%s' % (noun, is_valid(noun)))
-    if is_valid(noun):
-      unamb_nouns.add(noun)
-  print('%d->%d' % (len(wn_nouns), len(unamb_nouns)))
+  unamb_nouns = pickle.load(open('unambiguous_noun.p', 'rb'))
 
   num_tag = 0
   tags = []
