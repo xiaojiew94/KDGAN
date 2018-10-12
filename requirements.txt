@@ -1,0 +1,10 @@
+# conda create -n kdgan python=3.4
+# pip install --ignore-installed --upgrade tensorflow            # xw
+# pip install --ignore-installed --upgrade tensorflow-gpu==1.4.1 # cz
+# pip install --ignore-installed --upgrade tensorflow-gpu==1.4.1 # xw
+# pip install --ignore-installed -r requirements.txt
+# pip install -e .
+
+nltk==3.2.5
+pycountry==18.5.26
+
