@@ -16,7 +16,7 @@ idx_marker = 24
 sep_tag = ','
 sep_word = '+'
 
-wn_nouns = {synset.name().split('.')[0] for synset in wordnet.all_synsets('n')}
+# wn_nouns = {synset.name().split('.')[0] for synset in wordnet.all_synsets('n')}
 def is_valid(tag):
   ### one word tag
   if sep_word in tag:
@@ -24,11 +24,12 @@ def is_valid(tag):
   v_char = string.ascii_lowercase + '-'
   if any(c not in v_char for c in tag):
     return False
-  if not tag in wn_nouns:
-    return False
+  # if not tag in wn_nouns:
+  #   return False
   return True
 
 def main():
+  count = 0
   tags = []
   with open(tag_file) as fin:
     while True:
@@ -38,8 +39,9 @@ def main():
 
       tag = line.strip().split()[0]
       valid = is_valid(tag)
-      print('%s:%s' % (tag, valid))
-      input()
+      if valid:
+        count += 1
+  print('%d valid tags' % (count))
 
 def test():
   tag_count = {}
