@@ -6,6 +6,7 @@ import string
 
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
 tag_file = '/data/yfcc100m/yfcc100m_tag'
+tmp_file = '/data/yfcc100m/yfcc100m_tmp'
 
 sup_tag = 20
 
@@ -43,7 +44,11 @@ def main():
       valid = is_valid(tag)
       if valid:
         count += 1
+        tags.append(tag)
   print('%d valid tags' % (count))
+  with open(tmp_file) as fout:
+    for tag in tags:
+      fout.write('%s\n' % (tag))
 
 def test():
   tag_count = {}
