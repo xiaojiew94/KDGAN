@@ -24,10 +24,10 @@ def is_valid(tag):
   v_char = string.ascii_lowercase + '-'
   if any(c not in v_char for c in tag):
     return False
-  if not wordnet.synsets(tag):
-    return False
-  # if not tag in wn_nouns:
+  # if not wordnet.synsets(tag):
   #   return False
+  if not tag in wn_nouns:
+    return False
   return True
 
 def main():
