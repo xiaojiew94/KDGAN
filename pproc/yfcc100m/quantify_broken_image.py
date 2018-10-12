@@ -45,10 +45,10 @@ def main():
       if valid:
         count += 1
         tags.append(tag)
-  with open(tmp_file) as fout:
+  assert count == len(tags)
+  with open(tmp_file, 'w') as fout:
     for tag in tags:
       fout.write('%s\n' % (tag))
-  assert count == len(tags)
   print('%d valid tags' % (count))
 
 def test():
