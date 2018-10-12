@@ -2,10 +2,13 @@ from nltk.corpus import wordnet
 
 import string
 import calendar
+import pickle
 import pycountry
 
+spatial_file = '/data/yfcc100m/worldcitiespop.txt'
 def get_spatial():
   spatial_noun = set()
+  ### pycountry
   for country in pycountry.countries:
     if hasattr(country, 'alpha_2'):
       spatial_noun.add(country.alpha_2.lower())
@@ -27,6 +30,20 @@ def get_spatial():
       spatial_noun.add(subdivision.name.lower())
     if hasattr(subdivision, 'code'):
       spatial_noun.add(subdivision.code.lower())
+  ### worldcities
+  with open(spatial_file, encoding='iso-8859-1') as fin:
+    line = fin.readline()
+    while True:
+      line = fin.readline()
+      if not line:
+        break
+
+      fields = line.strip().split(',')
+      country_code, city = fields[0], fields[1]
+      if ' ' in city:
+        continue
+      spatial_noun.add(country_code)
+      spatial_noun.add(city)
   return spatial_noun
 
 def get_temporal():
@@ -63,6 +80,8 @@ def main():
     if is_valid(noun):
       unamb_nouns.add(noun)
   print('%d->%d' % (len(wn_nouns), len(unamb_nouns)))
+
+  pickle.dump(unamb_nouns, open('unambiguous_noun.p', 'wb'))
 
 if __name__ == '__main__':
   main()
