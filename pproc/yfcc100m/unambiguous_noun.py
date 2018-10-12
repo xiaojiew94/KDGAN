@@ -56,10 +56,12 @@ def get_temporal():
     temporal_noun.add(calendar.day_abbr[day].lower())
   return temporal_noun
 
-v_char = string.ascii_lowercase + '-'
+v_char = string.ascii_lowercase # + '-'
 spatial_noun = get_spatial()
 temporal_noun = get_temporal()
 def is_valid(noun):
+  if len(noun) < 4:
+    return False
   if any(c not in v_char for c in noun):
     return False
   if noun in spatial_noun:
