@@ -13,15 +13,19 @@ num_field = 25
 idx_field = 10
 idx_marker = 24
 
-sep_tags = ','
-sep_tag = '+'
+sep_tag = ','
+sep_word = '+'
 
-def is_valid(word):
-  valid = True
-  if (not wordnet.synsets(word) or
-      any(c not in string.ascii_lowercase + '-' for c in word)):
-    valid = False
-  return valid
+def is_valid(tag):
+  ### one word tag
+  if sep_word in tag:
+    return False
+  v_char = string.ascii_lowercase + '-'
+  if any(c not in v_char for c in tag):
+    return False
+  if not wordnet.synsets(word):
+    return False
+  return True
 
 def main():
   tags = []
@@ -32,7 +36,9 @@ def main():
         break
 
       tag = line.strip().split()[0]
-      print(tag)
+      valid = is_valid(tag)
+      print('%s:%s' % (tag, valid))
+      input()
 
 def test():
   tag_count = {}
@@ -50,10 +56,10 @@ def test():
         continue
       if len(fields[idx_field]) == 0: # no tags
         continue
-      tags = fields[idx_field].split(sep_tags)
+      tags = fields[idx_field].split(sep_tag)
       for tag in tags:
         tag = tag.lower()
-        words = tag.split(sep_tag)
+        words = tag.split(sep_word)
         valid = True
         for word in words:
           if not is_valid(word):
