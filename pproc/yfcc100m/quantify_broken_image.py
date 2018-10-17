@@ -19,7 +19,7 @@ sep_tag = ','
 sep_word = '+'
 
 def main():
-  unamb_nouns = pickle.load(open('unambiguous_noun.p', 'rb'))
+  unamb_nouns = pickle.load(open('wordnet_tag_set.p', 'rb'))
 
   num_tag = 0
   tags = []
@@ -33,17 +33,17 @@ def main():
       tag, count = fields[0], int(fields[1])
 
       valid = True
-      if count < 500:
-        valid = False
+      # if count < 500:
+      #   valid = False
       if not tag in unamb_nouns:
         valid = False
       if valid:
         num_tag += 1
         tags.append(tag)
   assert num_tag == len(tags)
-  with open(tmp_file, 'w') as fout:
-    for tag in tags:
-      fout.write('%s\n' % (tag))
+  # with open(tmp_file, 'w') as fout:
+  #   for tag in tags:
+  #     fout.write('%s\n' % (tag))
   print('%d valid tags' % (num_tag))
 
 def test():
