@@ -76,7 +76,7 @@ def get_imagenet_excl():
   for subdivision in pycountry.subdivisions:
     imagenet_excl.add(subdivision.name.lower())
 
-  with open('imagenet_exclude.t') as fin:
+  with open('imagenet_excluded.txt') as fin:
     for line in fin.readlines():
       imagenet_excl.add(line.strip())
 
