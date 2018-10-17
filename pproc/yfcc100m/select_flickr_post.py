@@ -37,6 +37,7 @@ def main():
       if fields[idx_marker] != '0': # not image
         continue
 
+      t_line += 1
       is_valid = False
       tags = fields[idx_field].split(sep_tag)
       for tag in tags:
@@ -48,7 +49,6 @@ def main():
       if is_valid:
         n_post += 1
 
-      t_line += 1
       # if t_line == 50000:
       #   break
       if (t_line % 5000000) == 0:
