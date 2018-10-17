@@ -19,8 +19,8 @@ sep_tag = ','
 sep_word = '+'
 
 def main():
-  unamb_nouns = pickle.load(open('wordnet_tag_set.p', 'rb'))
   unamb_nouns = pickle.load(open('imagenet_tag_set.p', 'rb'))
+  unamb_nouns = pickle.load(open('wordnet_tag_set.p', 'rb'))
 
   num_tag = 0
   tags = []
