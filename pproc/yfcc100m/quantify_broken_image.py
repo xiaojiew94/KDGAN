@@ -20,7 +20,7 @@ sep_word = '+'
 
 def main():
   unamb_nouns = pickle.load(open('imagenet_tag_set.p', 'rb'))
-  unamb_nouns = pickle.load(open('wordnet_tag_set.p', 'rb'))
+  # unamb_nouns = pickle.load(open('wordnet_tag_set.p', 'rb'))
 
   num_tag = 0
   tags = []
@@ -34,8 +34,8 @@ def main():
       tag, count = fields[0], int(fields[1])
 
       valid = True
-      if count < 200:
-        valid = False
+      # if count < 200:
+      #   valid = False
       if not tag in unamb_nouns:
         valid = False
       if valid:
