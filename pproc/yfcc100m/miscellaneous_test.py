@@ -30,13 +30,15 @@ def main():
   in_tag_set = pickle.load(open(in_file_p, 'rb'))
   wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
   # print('radio' in in_tag_set, 'radio' in wn_tag_set)
+  tmp_tag_set = set()
   with open(dataset_file) as fin:
     while True:
       line = fin.readline()
       if not line:
         break
       tot_line += 1
-      if (tot_line % 20000000) == 0:
+      if (tot_line % 10000000) == 0:
+        print(tmp_tag_set)
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -54,9 +56,8 @@ def main():
         if tag in in_tag_set or tag in wn_tag_set:
           is_valid = True
           break
-      if user == '40717756@N08' and 'ratio' in fields[idx_tag]:
-        print(tags)
-        input()
+      if user == '40717756@N08':
+        tmp_tag_set = tmp_tag_set.union(tags)
       if not is_valid:
         continue
       user_count[user] = user_count[user] + 1
