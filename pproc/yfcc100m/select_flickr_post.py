@@ -6,54 +6,57 @@ import pickle
 import string
 
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
+in_file_p = 'imagenet_tag_set.p'
+wn_file_p = 'wordnet_tag_set.p'
 
 num_field = 25
 idx_field = 10
 idx_marker = 24
+sep_field = '\t'
 sep_tag = ','
 
-def init_tag_count(file_p):
-  tag_set = pickle.load(open(file_p, 'rb'))
-  tag_count = {tag:0 for tag in tag_set}
-  return tag_count
+min_user = 20
+min_in_tag = 20
+min_wn_tag = 100
 
-imagenet_file_p = 'imagenet_tag_set.p'
-wordnet_file_p = 'wordnet_tag_set.p'
-def main():
-  imagenet_tag_count = init_tag_count(imagenet_file_p)
-  wordnet_tag_count = init_tag_count(wordnet_file_p)
-
-  n_post = 0
-  t_line = 0
+def get_tag_count(in_tag_set, wn_tag_set):
   with open(dataset_file) as fin:
     while True:
       line = fin.readline()
       if not line:
         break
-
-      fields = line.strip().split('\t')
+      fields = line.strip().split(sep_field)
       assert len(fields) == num_field
-
       if fields[idx_marker] != '0': # not image
         continue
-
-      t_line += 1
       is_valid = False
       tags = fields[idx_field].split(sep_tag)
+      print(tags)
+      input()
       for tag in tags:
-        tag = tag.lower()
-        if (tag in imagenet_tag_count or
-            tag in wordnet_tag_count):
+        if tag in in_tag_set or tag in wn_tag_set:
           is_valid = True
           break
-      if is_valid:
-        n_post += 1
 
-      # if t_line == 50000:
-      #   break
-      if (t_line % 5000000) == 0:
-        print('line#%09d #post=%d' % (t_line, n_post))
-  print('%s contains %d lines in total' % (dataset_file, t_line))
+
+  in_tag_count, wn_tag_count = {}, {}
+  return in_tag_count, wn_tag_count
+
+def main():
+  in_tag_set = pickle.load(open(in_file_p, 'rb'))
+  wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
+
+  while True:
+    print('#imagenet=%d #wordnet=%d' % (len(in_tag_set), len(wn_tag_set)))
+    in_tag_count, wn_tag_count = get_tag_count(in_tag_set, wn_tag_set)
+
+    in_tag_set = set([t for t, c in in_tag_count.items() if c >= min_in_tag])
+    wn_tag_set = set([t for t, c in wn_tag_count.items() if c >= min_wn_tag])
+
+    if (min(in_tag_count.values()) >= min_in_tag and
+        min(wn_tag_count.values()) >= min_wn_tag):
+      break
+  print('#imagenet=%d #wordnet=%d' % (len(in_tag_set), len(wn_tag_set)))
 
 if __name__ == '__main__':
   main()
