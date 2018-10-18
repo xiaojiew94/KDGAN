@@ -4,6 +4,7 @@ from urllib import request
 import pickle
 
 num_field = 25
+idx_num_line = 0
 idx_user = 3
 idx_tag = 10
 idx_marker = 24
@@ -43,6 +44,12 @@ def main():
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field
+      num_line = fields[idx_num_line]
+      if num_line != '69578747':
+        continue
+      tags = fields[idx_tag].split(sep_tag)
+      print(tags)
+      input()
       if fields[idx_marker] != '0': # not image
         continue
       if len(fields[idx_tag]) == 0: # no tags
@@ -51,7 +58,6 @@ def main():
       if user not in user_set:
         continue
       is_valid = False
-      tags = fields[idx_tag].split(sep_tag)
       for tag in tags:
         if tag in in_tag_set or tag in wn_tag_set:
           is_valid = True
