@@ -10,6 +10,7 @@ in_file_p = 'imagenet_tag_set.p'
 wn_file_p = 'wordnet_tag_set.p'
 in_file_f = 'imagenet_tag_set.f'
 wn_file_f = 'wordnet_tag_set.f'
+user_file_f = 'flickr_user_set.f'
 
 num_field = 25
 idx_user = 3
@@ -18,11 +19,11 @@ idx_marker = 24
 sep_field = '\t'
 sep_tag = ','
 
-min_user = 20
+min_user = 50
 min_in_tag = 20
 min_wn_tag = 100
 
-def get_tag_count(in_tag_set, wn_tag_set):
+def reduce(in_tag_set, wn_tag_set):
   user_count = {}
   tot_line = 0
   with open(dataset_file) as fin:
@@ -52,6 +53,7 @@ def get_tag_count(in_tag_set, wn_tag_set):
       user_count[user] = user_count.get(user, 0) + 1
   user_set = set([u for u,c in user_count.items() if c >= min_user])
 
+  num_post = 0
   in_tag_count, wn_tag_count = {}, {}
   with open(dataset_file) as fin:
     while True:
@@ -59,7 +61,7 @@ def get_tag_count(in_tag_set, wn_tag_set):
       if not line:
         break
       tot_line += 1
-      if (tot_line % 10000000) == 0:
+      if (tot_line % 20000000) == 0:
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -84,16 +86,17 @@ def get_tag_count(in_tag_set, wn_tag_set):
           in_tag_count[tag] = in_tag_count.get(tag, 0) + 1
         if tag in wn_tag_set:
           wn_tag_count[tag] = wn_tag_count.get(tag, 0) + 1
-  print('#user=%d #imagenet=%d #wordnet=%d' % (
-      len(user_set), len(in_tag_count), len(wn_tag_count)))
-  return in_tag_count, wn_tag_count
+      num_post += 1
+  print('#user=%d #imagenet=%d #wordnet=%d #post=%d' % (
+      len(user_set), len(in_tag_count), len(wn_tag_count), num_post))
+  return in_tag_count, wn_tag_count, user_set
 
 def main():
   in_tag_set = pickle.load(open(in_file_p, 'rb'))
   wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
 
   while True:
-    in_tag_count, wn_tag_count = get_tag_count(in_tag_set, wn_tag_set)
+    in_tag_count, wn_tag_count, user_set = reduce(in_tag_set, wn_tag_set)
 
     in_tag_set = set([t for t,c in in_tag_count.items() if c >= min_in_tag])
     wn_tag_set = set([t for t,c in wn_tag_count.items() if c >= min_wn_tag])
@@ -105,6 +108,7 @@ def main():
   print('#imagenet=%d #wordnet=%d' % (len(in_tag_set), len(wn_tag_set)))
   pickle.dump(in_tag_set, open(in_file_f, 'wb'))
   pickle.dump(wn_tag_set, open(wn_file_f, 'wb'))
+  pickle.dump(user_set, open(user_file_f, 'wb'))
 
 if __name__ == '__main__':
   main()
