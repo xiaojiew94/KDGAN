@@ -15,7 +15,7 @@ import re
 
 logging.basicConfig(level=logging.INFO, format=log_format)
 
-excluded_file = path.join(data_dir, 'imagenet_excluded.r')
+excluded_file = path.join(data_dir, 'imagenet_excluded.txt')
 readable_file = path.join(data_dir, 'imagenet_tag_set.r')
 pickle_file = path.join(data_dir, 'imagenet_tag_set.p')
 def sort_excluded():
