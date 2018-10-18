@@ -29,8 +29,7 @@ def main():
   user_count = {user:0 for user in user_set}
   in_tag_set = pickle.load(open(in_file_p, 'rb'))
   wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
-  print('radio' in in_tag_set, 'radio' in wn_tag_set)
-  exit()
+  # print('radio' in in_tag_set, 'radio' in wn_tag_set)
   with open(dataset_file) as fin:
     while True:
       line = fin.readline()
