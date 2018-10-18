@@ -58,8 +58,10 @@ def main():
       if not is_valid:
         continue
       user_count[user] = user_count[user] + 1
+
+  user_count = sorted(user_count.items(), key=itemgetter(1), reverse=True)
   with open('yfcc100m_top_user.txt', 'w') as fout:
-    for user, count in user_count.items():
+    for user, count in user_count:
       fout.write('%s\t%d\n' % (user, count))
 
 def test():
