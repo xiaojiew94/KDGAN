@@ -54,7 +54,7 @@ def main():
         if tag in in_tag_set or tag in wn_tag_set:
           is_valid = True
           break
-      if user == '40717756@N08':
+      if user == '40717756@N08' and 'ratio' in fields[idx_tag]:
         print(tags)
         input()
       if not is_valid:
