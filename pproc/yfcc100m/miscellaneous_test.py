@@ -55,6 +55,9 @@ def main():
         if tag in in_tag_set or tag in wn_tag_set:
           is_valid = True
           break
+      if user == '40717756@N08':
+        print(tags)
+        input()
       if not is_valid:
         continue
       user_count[user] = user_count[user] + 1
