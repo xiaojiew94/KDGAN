@@ -8,6 +8,8 @@ import string
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
 in_file_p = 'imagenet_tag_set.p'
 wn_file_p = 'wordnet_tag_set.p'
+in_file_f = 'imagenet_tag_set.f'
+wn_file_f = 'wordnet_tag_set.f'
 
 num_field = 25
 idx_user = 3
@@ -30,7 +32,6 @@ def get_tag_count(in_tag_set, wn_tag_set):
         break
       tot_line += 1
       if (tot_line % 5000000) == 0:
-        break
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -59,7 +60,6 @@ def get_tag_count(in_tag_set, wn_tag_set):
         break
       tot_line += 1
       if (tot_line % 5000000) == 0:
-        break
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -101,7 +101,10 @@ def main():
     if (min(in_tag_count.values()) >= min_in_tag and
         min(wn_tag_count.values()) >= min_wn_tag):
       break
+
   print('#imagenet=%d #wordnet=%d' % (len(in_tag_set), len(wn_tag_set)))
+  pickle.dump(in_tag_set, open(in_file_f, 'wb'))
+  pickle.dump(wn_tag_set, open(wn_file_f, 'wb'))
 
 if __name__ == '__main__':
   main()
