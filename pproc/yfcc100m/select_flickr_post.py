@@ -31,7 +31,7 @@ def get_tag_count(in_tag_set, wn_tag_set):
       if not line:
         break
       tot_line += 1
-      if (tot_line % 5000000) == 0:
+      if (tot_line % 20000000) == 0:
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -50,7 +50,7 @@ def get_tag_count(in_tag_set, wn_tag_set):
         continue
       user = fields[idx_user]
       user_count[user] = user_count.get(user, 0) + 1
-  user_set = [u for u,c in user_count.items() if c >= min_user]
+  user_set = set([u for u,c in user_count.items() if c >= min_user])
 
   in_tag_count, wn_tag_count = {}, {}
   with open(dataset_file) as fin:
@@ -59,7 +59,7 @@ def get_tag_count(in_tag_set, wn_tag_set):
       if not line:
         break
       tot_line += 1
-      if (tot_line % 5000000) == 0:
+      if (tot_line % 10000000) == 0:
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -68,6 +68,9 @@ def get_tag_count(in_tag_set, wn_tag_set):
         continue
       if len(fields[idx_tag]) == 0: # no tags
         continue
+      user = fields[idx_user]
+      if user not in user_set:
+        continue
       is_valid = False
       tags = fields[idx_tag].split(sep_tag)
       for tag in tags:
@@ -75,9 +78,6 @@ def get_tag_count(in_tag_set, wn_tag_set):
           is_valid = True
           break
       if not is_valid:
-        continue
-      user = fields[idx_user]
-      if user not in user_set:
         continue
       for tag in tags:
         if tag in in_tag_set:
