@@ -1,6 +1,8 @@
 from operator import itemgetter
 from urllib import request
 
+import pickle
+
 num_field = 25
 idx_user = 3
 idx_tag = 10
