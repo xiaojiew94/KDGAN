@@ -26,6 +26,7 @@ def main():
       user_set.add(user)
 
   tot_line = 0
+  user_count = {user:0 for user in user_set}
   in_tag_set = pickle.load(open(in_file_p, 'rb'))
   wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
   with open(dataset_file) as fin:
@@ -56,7 +57,7 @@ def main():
           break
       if not is_valid:
         continue
-      user_count[user] = user_count.get(user, 0) + 1
+      user_count[user] = user_count[user] + 1
   with open('yfcc100m_top_user.txt', 'w') as fout:
     for user, count in user_count.items():
       fout.write('%s\t%d\n' % (user, count))
