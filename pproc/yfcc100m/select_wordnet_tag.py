@@ -1,13 +1,22 @@
+from utils import data_dir, log_format
+
 import utils
 
 from nltk.corpus import wordnet
+from os import path
 
-import string
+import argparse
 import calendar
+import logging
 import pickle
 import pycountry
+import string
 
-worldcity_file = '/data/yfcc100m/worldcitiespop.txt'
+logging.basicConfig(level=logging.INFO, format=log_format)
+
+imagenet_file = path.join(data_dir, 'imagenet_tag_set.p')
+readable_file = path.join(data_dir, 'wordnet_tag_set.r')
+pickle_file = path.join(data_dir, 'wordnet_tag_set.p')
 def get_wordnet_excl():
   wordnet_excl = set()
 
@@ -30,22 +39,7 @@ def get_wordnet_excl():
     wordnet_excl.add(subdivision.name.lower())
     wordnet_excl.add(subdivision.code.lower())
 
-  with open(worldcity_file, encoding='iso-8859-1') as fin:
-    line = fin.readline()
-    while True:
-      line = fin.readline()
-      if not line:
-        break
-
-      fields = line.strip().split(',')
-      country_code, city = fields[0], fields[1]
-      if ' ' in city:
-        continue
-      wordnet_excl.add(city)
-      wordnet_excl.add(country_code)
-
-  imagenet_file_p = 'imagenet_tag_set.p'
-  imagenet_tag_set = pickle.load(open(imagenet_file_p, 'rb'))
+  imagenet_tag_set = pickle.load(open(imagenet_file, 'rb'))
   wordnet_excl = wordnet_excl.union(imagenet_tag_set)
 
   return wordnet_excl
@@ -73,10 +67,14 @@ def main():
   for word in word_list:
     if is_wordnet_tag(word):
       wordnet_tag_set.add(word)
-  wordnet_file_t = 'wordnet_tag_set.t'
-  utils.save_as_readable(wordnet_tag_set, wordnet_file_t)
-  wordnet_file_p = 'wordnet_tag_set.p'
-  pickle.dump(wordnet_tag_set, open(wordnet_file_p, 'wb'))
+  utils.save_set_readable(wordnet_tag_set, readable_file)
+  pickle.dump(wordnet_tag_set, open(pickle_file, 'wb'))
 
 if __name__ == '__main__':
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-o', '--override', action='store_true')
+  args = parser.parse_args()
+  if not path.isfile(pickle_file) or args.override:
+    main()
+  else:
+    logging.info('do not override')

@@ -1,5 +1,7 @@
+data_dir = 'data'
+log_format = '%(pathname)-25s%(message)s'
 
-def save_as_readable(tag_set, file_t):
-  with open(file_t, 'w') as fout:
-    for tag in sorted(tag_set):
-      fout.write('%s\n' % (tag))
+def save_set_readable(item_set, outfile):
+  with open(outfile, 'w') as fout:
+    for item in sorted(item_set):
+      fout.write('%s\n' % (item))

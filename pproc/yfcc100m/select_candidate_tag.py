@@ -1,16 +1,23 @@
+from utils import data_dir, log_format
+
 from nltk.corpus import wordnet
 from operator import itemgetter
+from os import path
 from sys import stdout
 
+import argparse
+import logging
 import pickle
 import string
 
+logging.basicConfig(level=logging.INFO, format=log_format)
+
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
-in_file_p = 'imagenet_tag_set.p'
-wn_file_p = 'wordnet_tag_set.p'
-in_file_f = 'imagenet_tag_set.f'
-wn_file_f = 'wordnet_tag_set.f'
-user_file_f = 'flickr_user_set.f'
+in_tag_set_file = path.join(data_dir, 'imagenet_tag_set.p')
+wn_tag_set_file = path.join(data_dir, 'wordnet_tag_set.p')
+in_tag_count_file = path.join(data_dir, 'imagenet_tag_count.p')
+wn_tag_count_file = path.join(data_dir, 'wordnet_tag_count.p')
+user_count_file = path.join(data_dir, 'flickr_user_count.p')
 
 num_field = 25
 idx_user = 3
@@ -21,9 +28,9 @@ sep_tag = ','
 
 min_user = 40
 min_in_tag = 40
-min_wn_tag = 100
+min_wn_tag = 200
 
-def reduce(in_tag_set, wn_tag_set):
+def get_count(in_tag_set, wn_tag_set):
   user_count = {}
   tot_line = 0
   with open(dataset_file) as fin:
@@ -33,7 +40,7 @@ def reduce(in_tag_set, wn_tag_set):
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        print('line#%09d' % (tot_line))
+        logging.info('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field
@@ -51,7 +58,7 @@ def reduce(in_tag_set, wn_tag_set):
         continue
       user = fields[idx_user]
       user_count[user] = user_count.get(user, 0) + 1
-  user_set = set([u for u,c in user_count.items() if c >= min_user])
+  user_count = {u:c for u,c in user_count.items() if c >= min_user}
 
   num_post = 0
   in_tag_count, wn_tag_count = {}, {}
@@ -62,7 +69,7 @@ def reduce(in_tag_set, wn_tag_set):
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        print('line#%09d' % (tot_line))
+        logging.info('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field
@@ -71,7 +78,7 @@ def reduce(in_tag_set, wn_tag_set):
       if len(fields[idx_tag]) == 0: # no tags
         continue
       user = fields[idx_user]
-      if user not in user_set:
+      if user not in user_count:
         continue
       is_valid = False
       tags = fields[idx_tag].split(sep_tag)
@@ -87,16 +94,20 @@ def reduce(in_tag_set, wn_tag_set):
         if tag in wn_tag_set:
           wn_tag_count[tag] = wn_tag_count.get(tag, 0) + 1
       num_post += 1
-  print('#user=%d #imagenet=%d #wordnet=%d #post=%d' % (
-      len(user_set), len(in_tag_count), len(wn_tag_count), num_post))
-  return in_tag_count, wn_tag_count, user_set
+  num_user = len(user_count)
+  num_in_tag = len(in_tag_count)
+  num_wn_tag = len(wn_tag_count)
+  logging.info('#user=%d #post=%d' % (num_user, num_post))
+  logging.info('#imagenet=%d #wordnet=%d' % (num_in_tag, num_wn_tag))
+  return in_tag_count, wn_tag_count, user_count
 
 def main():
-  in_tag_set = pickle.load(open(in_file_p, 'rb'))
-  wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
+  in_tag_set = pickle.load(open(in_tag_set_file, 'rb'))
+  wn_tag_set = pickle.load(open(wn_tag_set_file, 'rb'))
 
   while True:
-    in_tag_count, wn_tag_count, user_set = reduce(in_tag_set, wn_tag_set)
+    results = get_count(in_tag_set, wn_tag_set)
+    in_tag_count, wn_tag_count, user_count = results
 
     in_tag_set = set([t for t,c in in_tag_count.items() if c >= min_in_tag])
     wn_tag_set = set([t for t,c in wn_tag_count.items() if c >= min_wn_tag])
@@ -104,13 +115,19 @@ def main():
     if (min(in_tag_count.values()) >= min_in_tag and
         min(wn_tag_count.values()) >= min_wn_tag):
       break
-
-  print('#imagenet=%d #wordnet=%d' % (len(in_tag_set), len(wn_tag_set)))
-  pickle.dump(in_tag_set, open(in_file_f, 'wb'))
-  pickle.dump(wn_tag_set, open(wn_file_f, 'wb'))
-  pickle.dump(user_set, open(user_file_f, 'wb'))
+  in_tag_count = {t:c for t,c in in_tag_count.items() if c >= min_in_tag}
+  wn_tag_count = {t:c for t,c in wn_tag_count.items() if c >= min_wn_tag}
+  pickle.dump(in_tag_count, open(in_tag_count_file, 'wb'))
+  pickle.dump(wn_tag_count, open(wn_tag_count_file, 'wb'))
+  pickle.dump(user_count, open(user_count_file, 'wb'))
 
 if __name__ == '__main__':
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-o', '--override', action='store_true')
+  args = parser.parse_args()
+  if not path.isfile(user_count_file) or args.override:
+    main()
+  else:
+    logging.info('do not override')
 
 

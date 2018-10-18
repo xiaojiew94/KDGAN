@@ -1,14 +1,23 @@
+from utils import data_dir, log_format
+
 import utils
 
 from nltk.corpus import wordnet
+from os import path
 from sys import stdout
 from urllib import request
 
+import argparse
+import logging
 import pickle
 import pycountry
 import re
 
-excluded_file = 'imagenet_excluded.txt'
+logging.basicConfig(level=logging.INFO, format=log_format)
+
+excluded_file = path.join(data_dir, 'imagenet_excluded.r')
+readable_file = path.join(data_dir, 'imagenet_tag_set.r')
+pickle_file = path.join(data_dir, 'imagenet_tag_set.p')
 def sort_excluded():
   imagenet_excl = set()
   with open(excluded_file) as fin:
@@ -81,10 +90,14 @@ def main():
   for word in word_set:
     if is_imagenet_tag(word):
       imagenet_tag_set.add(word)
-  imagenet_file_t = 'imagenet_tag_set.t'
-  utils.save_as_readable(imagenet_tag_set, imagenet_file_t)
-  imagenet_file_p = 'imagenet_tag_set.p'
-  pickle.dump(imagenet_tag_set, open(imagenet_file_p, 'wb'))
+  utils.save_set_readable(imagenet_tag_set, readable_file)
+  pickle.dump(imagenet_tag_set, open(pickle_file, 'wb'))
 
 if __name__ == '__main__':
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-o', '--override', action='store_true')
+  args = parser.parse_args()
+  if not path.isfile(pickle_file) or args.override:
+    main()
+  else:
+    logging.info('do not override')
