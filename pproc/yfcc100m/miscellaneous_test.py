@@ -25,6 +25,7 @@ def main():
       user = fields[1].upper()
       user_set.add(user)
 
+  tot_line = 0
   in_tag_set = pickle.load(open(in_file_p, 'rb'))
   wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
   with open(dataset_file) as fin:
