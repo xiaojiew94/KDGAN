@@ -50,9 +50,42 @@ def get_tag_count(in_tag_set, wn_tag_set):
       user = fields[idx_user]
       user_count[user] = user_count.get(user, 0) + 1
   user_set = [u for u,c in user_count.items() if c >= min_user]
-  print('#user=%d' % (len(user_set)))
 
   in_tag_count, wn_tag_count = {}, {}
+  with open(dataset_file) as fin:
+    while True:
+      line = fin.readline()
+      if not line:
+        break
+      tot_line += 1
+      if (tot_line % 5000000) == 0:
+        break
+        print('line#%09d' % (tot_line))
+
+      fields = line.strip().split(sep_field)
+      assert len(fields) == num_field
+      if fields[idx_marker] != '0': # not image
+        continue
+      if len(fields[idx_tag]) == 0: # no tags
+        continue
+      is_valid = False
+      tags = fields[idx_tag].split(sep_tag)
+      for tag in tags:
+        if tag in in_tag_set or tag in wn_tag_set:
+          is_valid = True
+          break
+      if not is_valid:
+        continue
+      user = fields[idx_user]
+      if user not in user_set:
+        continue
+      for tag in tags:
+        if tag in in_tag_set:
+          in_tag_count[tag] = in_tag_count.get(tag, 0) + 1
+        if tag in wn_tag_set:
+          wn_tag_count[tag] = wn_tag_count.get(tag, 0) + 1
+  print('#user=%d #imagenet=%d #wordnet=%d' % (
+      len(user_set), len(in_tag_count), len(wn_tag_count)))
   return in_tag_count, wn_tag_count
 
 def main():
@@ -61,7 +94,6 @@ def main():
 
   while True:
     in_tag_count, wn_tag_count = get_tag_count(in_tag_set, wn_tag_set)
-    exit()
 
     in_tag_set = set([t for t,c in in_tag_count.items() if c >= min_in_tag])
     wn_tag_set = set([t for t,c in wn_tag_count.items() if c >= min_wn_tag])
