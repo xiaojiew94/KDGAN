@@ -13,7 +13,19 @@ sep_tag = ','
 in_file_p = 'imagenet_tag_set.p'
 wn_file_p = 'wordnet_tag_set.p'
 dataset_file = '/data/yfcc100m/yfcc100m_dataset'
+in_file_f = 'imagenet_tag_set.f'
+wn_file_f = 'wordnet_tag_set.f'
+yfcc_rnd_f = 'yfcc100m_rnd_tag.txt'
 def main():
+  in_tag_set = pickle.load(open(in_file_f, 'rb'))
+  wn_tag_set = pickle.load(open(wn_file_f, 'rb'))
+  with open(yfcc_rnd_f) as fin:
+    for line in fin.readlines():
+      fields = line.split()
+      tag = fields[0]
+      if tag not in in_tag_set and tag not in wn_tag_set:
+        print(tag)
+  return
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_top/yfcc10k.data'
   user_set = set()
   with open(file) as fin:
