@@ -35,8 +35,6 @@ def main():
       if not line:
         break
       tot_line += 1
-      if tot_line >= 10000:
-        break
       if (tot_line % 20000000) == 0:
         print('line#%09d' % (tot_line))
 
