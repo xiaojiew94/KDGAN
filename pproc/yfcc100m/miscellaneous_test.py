@@ -3,6 +3,7 @@ from urllib import request
 
 def main():
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_top/yfcc10k.data'
+  user_set = set()
   with open(file) as fin:
     while True:
       line = fin.readline()
@@ -10,8 +11,9 @@ def main():
         break
       fields = line.strip().split('\t')
 
-      print(fields)
-      input()
+      user = fields[1].upper()
+      user_set.add(user)
+  print(user_set)
 
 def test():
   file = '/home/xiaojie/Projects/data/yfcc100m/yfcc_rnd/yfcc_rnd.data'
