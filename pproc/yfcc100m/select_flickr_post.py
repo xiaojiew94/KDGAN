@@ -30,6 +30,7 @@ def get_tag_count(in_tag_set, wn_tag_set):
         break
       tot_line += 1
       if (tot_line % 5000000) == 0:
+        break
         print('line#%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
@@ -44,9 +45,10 @@ def get_tag_count(in_tag_set, wn_tag_set):
         if tag in in_tag_set or tag in wn_tag_set:
           is_valid = True
           break
+      if not is_valid:
+        continue
+      print(fields[idx_tag])
       user = fields[idx_user]
-      print(user)
-      input()
       user_count[user] = user_count.get(user, 0) + 1
 
   in_tag_count, wn_tag_count = {}, {}
