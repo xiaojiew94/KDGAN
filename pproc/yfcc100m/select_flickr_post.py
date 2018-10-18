@@ -47,9 +47,10 @@ def get_tag_count(in_tag_set, wn_tag_set):
           break
       if not is_valid:
         continue
-      print(fields[idx_tag])
       user = fields[idx_user]
       user_count[user] = user_count.get(user, 0) + 1
+  user_set = [u for u,c in user_count.items() if c >= min_user]
+  print('#user=%d' % (len(user_set)))
 
   in_tag_count, wn_tag_count = {}, {}
   return in_tag_count, wn_tag_count
@@ -59,11 +60,11 @@ def main():
   wn_tag_set = pickle.load(open(wn_file_p, 'rb'))
 
   while True:
-    print('#imagenet=%d #wordnet=%d' % (len(in_tag_set), len(wn_tag_set)))
     in_tag_count, wn_tag_count = get_tag_count(in_tag_set, wn_tag_set)
+    exit()
 
-    in_tag_set = set([t for t, c in in_tag_count.items() if c >= min_in_tag])
-    wn_tag_set = set([t for t, c in wn_tag_count.items() if c >= min_wn_tag])
+    in_tag_set = set([t for t,c in in_tag_count.items() if c >= min_in_tag])
+    wn_tag_set = set([t for t,c in wn_tag_count.items() if c >= min_wn_tag])
 
     if (min(in_tag_count.values()) >= min_in_tag and
         min(wn_tag_count.values()) >= min_wn_tag):
