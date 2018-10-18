@@ -19,8 +19,8 @@ idx_marker = 24
 sep_field = '\t'
 sep_tag = ','
 
-min_user = 200
-min_in_tag = 40
+min_user = 100
+min_in_tag = 50
 min_wn_tag = 200
 
 def reduce(in_tag_set, wn_tag_set):
