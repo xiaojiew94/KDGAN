@@ -28,7 +28,7 @@ sep_tag = ','
 
 min_user = 40
 min_in_tag = 40
-min_wn_tag = 400
+min_wn_tag = 200
 
 def get_count(in_tag_set, wn_tag_set):
   tot_line = 0

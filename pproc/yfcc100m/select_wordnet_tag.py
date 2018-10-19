@@ -7,12 +7,17 @@ from os import path
 
 import argparse
 import calendar
+import gzip
+import io
 import logging
 import pickle
 import pycountry
+import requests
 import string
 
 logging.basicConfig(level=logging.INFO, format=log_format)
+
+world_city_file = '/data/worldcitiespop.txt'
 
 imagenet_file = path.join(data_dir, 'imagenet_tag_set.p')
 readable_file = path.join(data_dir, 'wordnet_tag_set.r')
@@ -38,6 +43,17 @@ def get_wordnet_excl():
   for subdivision in pycountry.subdivisions:
     wordnet_excl.add(subdivision.name.lower())
     wordnet_excl.add(subdivision.code.lower())
+
+  with open(world_city_file, encoding='iso-8859-1') as fin:
+    line = fin.readline()
+    while True:
+      line = fin.readline()
+      if not line:
+        break
+      fields = line.strip().split(',')
+      country_code, city_name = fields[0], fields[1]
+      wordnet_excl.add(country_code)
+      wordnet_excl = wordnet_excl.union(city_name.split())
 
   imagenet_tag_set = pickle.load(open(imagenet_file, 'rb'))
   wordnet_excl = wordnet_excl.union(imagenet_tag_set)
