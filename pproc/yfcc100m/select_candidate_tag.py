@@ -28,11 +28,11 @@ sep_tag = ','
 
 min_user = 40
 min_in_tag = 40
-min_wn_tag = 200
+min_wn_tag = 400
 
 def get_count(in_tag_set, wn_tag_set):
-  user_count = {}
   tot_line = 0
+  user_count = {}
   with open(dataset_file) as fin:
     while True:
       line = fin.readline()
@@ -58,10 +58,11 @@ def get_count(in_tag_set, wn_tag_set):
         continue
       user = fields[idx_user]
       user_count[user] = user_count.get(user, 0) + 1
-  user_count = {u:c for u,c in user_count.items() if c >= min_user}
 
+  tot_line = 0
   num_post = 0
   in_tag_count, wn_tag_count = {}, {}
+  user_count = {u:c for u,c in user_count.items() if c >= min_user}
   with open(dataset_file) as fin:
     while True:
       line = fin.readline()
