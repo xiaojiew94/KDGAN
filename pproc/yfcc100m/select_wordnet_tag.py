@@ -12,7 +12,6 @@ import io
 import logging
 import pickle
 import pycountry
-import requests
 import string
 
 logging.basicConfig(level=logging.INFO, format=log_format)
