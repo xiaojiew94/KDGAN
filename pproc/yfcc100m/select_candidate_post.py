@@ -57,7 +57,7 @@ def main():
         if tag not in title and tag not in description:
           is_valid = False
           break
-      if not is is_valid:
+      if not is_valid:
         continue
       print(tags)
       input()
