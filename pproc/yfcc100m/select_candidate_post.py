@@ -25,6 +25,7 @@ def main():
   print('#imagenet=%d #wordnet=%d' % (num_in_tag, num_wn_tag))
   print('#user=%d' % (num_user))
 
+  num_valid = 0
   tot_line = 0
   with open(dataset_file) as fin:
     while True:
@@ -33,7 +34,7 @@ def main():
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        logging.info('line#%09d' % (tot_line))
+        logging.info('line#%09d %d' % (tot_line, num_valid))
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field
@@ -59,8 +60,8 @@ def main():
           break
       if not is_valid:
         continue
-      print(tags)
-      input()
+      num_valid += 1
+  logging.info('#valid=%d' % (num_valid))
 
 if __name__ == '__main__':
   main()
