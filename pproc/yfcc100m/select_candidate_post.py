@@ -14,7 +14,7 @@ user_count_file = path.join(data_dir, 'flickr_user_count.p')
 
 min_user = 20
 min_in_tag = 20
-min_wn_tag = 100
+min_wn_tag = 20 # 100
 
 def get_count(in_tag_count, wn_tag_count, user_count):
   in_tag_set = set(in_tag_count.keys())
@@ -98,6 +98,11 @@ def main():
     user_count = {u:c for u,c in user_count.items() if c >= min_user}
 
 if __name__ == '__main__':
-  main()
-
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-o', '--override', action='store_true')
+  args = parser.parse_args()
+  if not path.isfile(user_count_file) or args.override:
+    main()
+  else:
+    logging.info('do not override')
 

@@ -19,9 +19,9 @@ in_tag_count_file = path.join(data_dir, 'imagenet_tag_count.p')
 wn_tag_count_file = path.join(data_dir, 'wordnet_tag_count.p')
 user_count_file = path.join(data_dir, 'flickr_user_count.p')
 
-min_user = 40
-min_in_tag = 40
-min_wn_tag = 200
+min_user = 20 # 40
+min_in_tag = 20 # 40
+min_wn_tag = 20 # 200
 
 def get_count(in_tag_set, wn_tag_set):
   tot_line = 0
