@@ -1,7 +1,8 @@
 ### kdgan
 
-*.r
 *.p
+*.r
+*.t
 
 ### python
 # Byte-compiled / optimized / DLL files

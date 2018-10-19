@@ -93,6 +93,14 @@ def main():
         min(user_count.values()) >= min_user):
       break
 
+    in_tag_count_tmpfile = path.join(data_dir, 'imagenet_tag_count.t')
+    wn_tag_count_tmpfile = path.join(data_dir, 'wordnet_tag_count.t')
+    user_count_tmpfile = path.join(data_dir, 'flickr_user_count.t')
+    pickle.dump(in_tag_count, open(in_tag_count_tmpfile, 'wb'))
+    pickle.dump(wn_tag_count, open(wn_tag_count_tmpfile, 'wb'))
+    pickle.dump(user_count, open(user_count_tmpfile, 'wb'))
+    break
+
     in_tag_count = {t:c for t,c in in_tag_count.items() if c >= min_in_tag}
     wn_tag_count = {t:c for t,c in wn_tag_count.items() if c >= min_wn_tag}
     user_count = {u:c for u,c in user_count.items() if c >= min_user}
