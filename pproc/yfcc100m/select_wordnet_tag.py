@@ -44,6 +44,7 @@ def get_wordnet_excl():
     wordnet_excl.add(subdivision.name.lower())
     wordnet_excl.add(subdivision.code.lower())
 
+  city_names = []
   with open(world_city_file, encoding='iso-8859-1') as fin:
     line = fin.readline()
     while True:
@@ -53,7 +54,8 @@ def get_wordnet_excl():
       fields = line.strip().split(',')
       country_code, city_name = fields[0], fields[1]
       wordnet_excl.add(country_code)
-      wordnet_excl = wordnet_excl.union(city_name.split())
+      city_names.extend(city_name.split())
+  wordnet_excl = wordnet_excl.union(city_names)
 
   imagenet_tag_set = pickle.load(open(imagenet_file, 'rb'))
   wordnet_excl = wordnet_excl.union(imagenet_tag_set)
