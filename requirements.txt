@@ -7,4 +7,4 @@
 
 nltk==3.2.5
 pycountry==18.5.26
-
+requests==2.20.0

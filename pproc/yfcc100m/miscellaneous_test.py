@@ -16,12 +16,6 @@ def main():
   info = json.loads(response.text)
   pp = pprint.PrettyPrinter(indent=2)
   pp.pprint(info)
-in_tag_count_file = path.join(data_dir, 'imagenet_tag_count.p')
-wn_tag_count_file = path.join(data_dir, 'wordnet_tag_count.p')
-user_count_file = path.join(data_dir, 'flickr_user_count.p')
-  in_tag_count = pickle.load(open(in_tag_count_file, 'rb'))
-  wn_tag_count = pickle.load(open(wn_tag_count_file, 'rb'))
-  user_count = pickle.load(open(user_count_file, 'rb'))
-   
+
 if __name__ == '__main__':
   main()
