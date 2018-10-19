@@ -1,8 +1,4 @@
-from utils import data_dir, log_format
-
-from utils import num_field
-from utils import idx_user, idx_tag, idx_marker
-from utils import sep_field, sep_tag
+from utils import *
 
 from os import path
 
@@ -52,6 +48,9 @@ def main():
       for tag in fields[idx_tag].split(sep_tag):
         if tag in in_tag_set or tag in wn_tag_set:
           tags.append(tag)
+      if len(tags) == 0:
+        continue
+
       print(tags)
       input()
 
