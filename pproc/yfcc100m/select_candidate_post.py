@@ -65,7 +65,7 @@ def get_count(in_tag_count, wn_tag_count, user_count):
         in_tag_count[tag] = in_tag_count.get(tag, 0) + 1
       for tag in wn_tags:
         wn_tag_count[tag] = wn_tag_count.get(tag, 0) + 1
-      user_count[user] = user_count.get(tag, 0) + 1
+      user_count[user] = user_count.get(user, 0) + 1
   num_in_tag = len(in_tag_count)
   num_wn_tag = len(wn_tag_count)
   num_user = len(user_count)
@@ -92,14 +92,6 @@ def main():
         min(wn_tag_count.values()) >= min_wn_tag and
         min(user_count.values()) >= min_user):
       break
-
-    in_tag_count_tmpfile = path.join(data_dir, 'imagenet_tag_count.t')
-    wn_tag_count_tmpfile = path.join(data_dir, 'wordnet_tag_count.t')
-    user_count_tmpfile = path.join(data_dir, 'flickr_user_count.t')
-    pickle.dump(in_tag_count, open(in_tag_count_tmpfile, 'wb'))
-    pickle.dump(wn_tag_count, open(wn_tag_count_tmpfile, 'wb'))
-    pickle.dump(user_count, open(user_count_tmpfile, 'wb'))
-    break
 
     in_tag_count = {t:c for t,c in in_tag_count.items() if c >= min_in_tag}
     wn_tag_count = {t:c for t,c in wn_tag_count.items() if c >= min_wn_tag}
