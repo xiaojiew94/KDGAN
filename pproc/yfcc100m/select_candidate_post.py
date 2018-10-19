@@ -50,7 +50,15 @@ def main():
           tags.append(tag)
       if len(tags) == 0:
         continue
-
+      title = fields[idx_title]
+      description = fields[idx_description]
+      is_valid = True
+      for tag in tags:
+        if tag not in title and tag not in description:
+          is_valid = False
+          break
+      if not is is_valid:
+        continue
       print(tags)
       input()
 

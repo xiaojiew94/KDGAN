@@ -1,4 +1,4 @@
-from utils import data_dir, log_format
+from utils import *
 
 from nltk.corpus import wordnet
 from operator import itemgetter
@@ -18,13 +18,6 @@ wn_tag_set_file = path.join(data_dir, 'wordnet_tag_set.p')
 in_tag_count_file = path.join(data_dir, 'imagenet_tag_count.p')
 wn_tag_count_file = path.join(data_dir, 'wordnet_tag_count.p')
 user_count_file = path.join(data_dir, 'flickr_user_count.p')
-
-num_field = 25
-idx_user = 3
-idx_tag = 10
-idx_marker = 24
-sep_field = '\t'
-sep_tag = ','
 
 min_user = 40
 min_in_tag = 40

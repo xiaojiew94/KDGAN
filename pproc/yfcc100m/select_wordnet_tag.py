@@ -1,4 +1,4 @@
-from utils import data_dir, log_format
+from utils import *
 
 import utils
 
