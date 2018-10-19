@@ -1,5 +1,9 @@
 from utils import data_dir, log_format
 
+from utils import num_field
+from utils import idx_user, idx_tag, idx_marker
+from utils import sep_field, sep_tag
+
 from os import path
 
 import logging
