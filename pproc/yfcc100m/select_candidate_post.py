@@ -20,11 +20,6 @@ def get_count(in_tag_count, wn_tag_count, user_count):
   in_tag_set = set(in_tag_count.keys())
   wn_tag_set = set(wn_tag_count.keys())
   user_set = set(user_count.keys())
-  num_in_tag = len(in_tag_set)
-  num_wn_tag = len(wn_tag_set)
-  num_user = len(user_set)
-  logging.info('#imagenet=%d #wordnet=%d' % (num_in_tag, num_wn_tag))
-  logging.info('#user=%d' % (num_user))
 
   in_tag_count, wn_tag_count, user_count = {}, {}, {}
 
@@ -71,17 +66,23 @@ def get_count(in_tag_count, wn_tag_count, user_count):
       for tag in wn_tags:
         wn_tag_count[tag] = wn_tag_count.get(tag, 0) + 1
       user_count[user] = user_count.get(tag, 0) + 1
-  num_user = len(user_count)
   num_in_tag = len(in_tag_count)
   num_wn_tag = len(wn_tag_count)
-  logging.info('#user=%d #post=%d' % (num_user, num_post))
+  num_user = len(user_count)
   logging.info('#imagenet=%d #wordnet=%d' % (num_in_tag, num_wn_tag))
+  logging.info('#user=%d #post=%d' % (num_user, num_post))
   return in_tag_count, wn_tag_count, user_count
 
 def main():
   in_tag_count = pickle.load(open(in_tag_count_file, 'rb'))
   wn_tag_count = pickle.load(open(wn_tag_count_file, 'rb'))
   user_count = pickle.load(open(user_count_file, 'rb'))
+
+  num_in_tag = len(in_tag_count)
+  num_wn_tag = len(wn_tag_count)
+  num_user = len(user_count)
+  logging.info('#imagenet=%d #wordnet=%d' % (num_in_tag, num_wn_tag))
+  logging.info('#user=%d' % (num_user))
 
   while True:
     results = get_count(in_tag_count, wn_tag_count, user_count)
@@ -91,6 +92,10 @@ def main():
         min(wn_tag_count.values()) >= min_wn_tag and
         min(user_count.values()) >= min_user):
       break
+
+    in_tag_count = {t:c for t,c in in_tag_count.items() if c >= min_in_tag}
+    wn_tag_count = {t:c for t,c in wn_tag_count.items() if c >= min_wn_tag}
+    user_count = {u:c for u,c in user_count.items() if c >= min_user}
 
 if __name__ == '__main__':
   main()
