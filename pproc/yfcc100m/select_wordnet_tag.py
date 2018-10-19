@@ -17,10 +17,6 @@ import string
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 world_city_file = '/data/worldcitiespop.txt'
-
-imagenet_file = path.join(data_dir, 'imagenet_tag_set.p')
-readable_file = path.join(data_dir, 'wordnet_tag_set.r')
-pickle_file = path.join(data_dir, 'wordnet_tag_set.p')
 def get_wordnet_excl():
   wordnet_excl = set()
 
@@ -56,7 +52,7 @@ def get_wordnet_excl():
       city_names.extend(city_name.split())
   wordnet_excl = wordnet_excl.union(city_names)
 
-  imagenet_tag_set = pickle.load(open(imagenet_file, 'rb'))
+  imagenet_tag_set = pickle.load(open(in_all_noun_pfile, 'rb'))
   wordnet_excl = wordnet_excl.union(imagenet_tag_set)
 
   return wordnet_excl
@@ -84,14 +80,14 @@ def main():
   for word in word_list:
     if is_wordnet_tag(word):
       wordnet_tag_set.add(word)
-  utils.save_set_readable(wordnet_tag_set, readable_file)
-  pickle.dump(wordnet_tag_set, open(pickle_file, 'wb'))
+  utils.save_set_readable(wordnet_tag_set, wn_all_noun_rfile)
+  pickle.dump(wordnet_tag_set, open(wn_all_noun_pfile, 'wb'))
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-o', '--override', action='store_true')
   args = parser.parse_args()
-  if not path.isfile(pickle_file) or args.override:
+  if not path.isfile(wn_all_noun_pfile) or args.override:
     main()
   else:
     logging.info('do not override')

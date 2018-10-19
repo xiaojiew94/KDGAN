@@ -8,15 +8,6 @@ import pickle
 
 logging.basicConfig(level=logging.INFO, format=log_format)
 
-dataset_file = '/data/yfcc100m/yfcc100m_dataset'
-in_tag_count_file = path.join(data_dir, 'imagenet_tag_count.p')
-wn_tag_count_file = path.join(data_dir, 'wordnet_tag_count.p')
-user_count_file = path.join(data_dir, 'flickr_user_count.p')
-
-min_user = 20
-min_in_tag = 20
-min_wn_tag = 20 # 100
-
 def get_count(in_tag_count, wn_tag_count, user_count):
   in_tag_set = set(in_tag_count.keys())
   wn_tag_set = set(wn_tag_count.keys())
@@ -75,9 +66,9 @@ def get_count(in_tag_count, wn_tag_count, user_count):
   return in_tag_count, wn_tag_count, user_count
 
 def main():
-  in_tag_count = pickle.load(open(in_tag_count_file, 'rb'))
-  wn_tag_count = pickle.load(open(wn_tag_count_file, 'rb'))
-  user_count = pickle.load(open(user_count_file, 'rb'))
+  in_tag_count = pickle.load(open(in_initial_noun_pfile, 'rb'))
+  wn_tag_count = pickle.load(open(wn_initial_noun_pfile, 'rb'))
+  user_count = pickle.load(open(initial_user_pfile, 'rb'))
 
   num_in_tag = len(in_tag_count)
   num_wn_tag = len(wn_tag_count)
@@ -97,12 +88,15 @@ def main():
     in_tag_count = {t:c for t,c in in_tag_count.items() if c >= min_in_tag}
     wn_tag_count = {t:c for t,c in wn_tag_count.items() if c >= min_wn_tag}
     user_count = {u:c for u,c in user_count.items() if c >= min_user}
+  pickle.dump(in_tag_count, open(in_refined_noun_pfile, 'wb'))
+  pickle.dump(wn_tag_count, open(wn_refined_noun_pfile, 'wb'))
+  pickle.dump(user_count, open(refined_user_pfile, 'wb'))
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-o', '--override', action='store_true')
   args = parser.parse_args()
-  if args.override:
+  if not path.isfile(refined_user_pfile) or args.override:
     main()
   else:
     logging.info('do not override')

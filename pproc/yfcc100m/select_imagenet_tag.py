@@ -15,9 +15,7 @@ import re
 
 logging.basicConfig(level=logging.INFO, format=log_format)
 
-excluded_file = path.join(data_dir, 'imagenet_excluded.txt')
-readable_file = path.join(data_dir, 'imagenet_tag_set.r')
-pickle_file = path.join(data_dir, 'imagenet_tag_set.p')
+excluded_file = path.join(data_dir, 'in_excluded.txt')
 def sort_excluded():
   imagenet_excl = set()
   with open(excluded_file) as fin:
@@ -50,9 +48,15 @@ def is_imagenet_tag(word):
     return False
   if len(word) < 3:
     return False
-  if len(wordnet.synsets(word)) == 0:
+  synsets = wordnet.synsets(word)
+  if len(synsets) == 0:
     return False
-  return True
+  is_valid = False
+  for synset in synsets:
+    if synset.name().split('.')[1] == 'n':
+      is_valid = True
+      break
+  return is_valid
 
 def main():
   base_url = 'https://raw.githubusercontent.com/tensorflow/models/master/research/inception/inception/data/'
@@ -90,14 +94,14 @@ def main():
   for word in word_set:
     if is_imagenet_tag(word):
       imagenet_tag_set.add(word)
-  utils.save_set_readable(imagenet_tag_set, readable_file)
-  pickle.dump(imagenet_tag_set, open(pickle_file, 'wb'))
+  utils.save_set_readable(imagenet_tag_set, in_all_noun_rfile)
+  pickle.dump(imagenet_tag_set, open(in_all_noun_pfile, 'wb'))
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-o', '--override', action='store_true')
   args = parser.parse_args()
-  if not path.isfile(pickle_file) or args.override:
+  if not path.isfile(in_all_noun_pfile) or args.override:
     main()
   else:
     logging.info('do not override')
