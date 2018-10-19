@@ -2,6 +2,7 @@ from utils import *
 
 from os import path
 
+import argparse
 import logging
 import pickle
 
@@ -101,7 +102,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-o', '--override', action='store_true')
   args = parser.parse_args()
-  if not path.isfile(user_count_file) or args.override:
+  if args.override:
     main()
   else:
     logging.info('do not override')
