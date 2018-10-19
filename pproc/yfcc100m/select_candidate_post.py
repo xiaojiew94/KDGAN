@@ -55,7 +55,7 @@ def get_count(in_tag_count, wn_tag_count, user_count):
       title = fields[idx_title]
       description = fields[idx_description]
       is_valid = True
-      for tag in tags:
+      for tag in in_tags + wn_tags:
         if tag not in title and tag not in description:
           is_valid = False
           break
