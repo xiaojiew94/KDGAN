@@ -9,11 +9,11 @@ import argparse
 import calendar
 import gzip
 import io
-import logging
 import pickle
 import pycountry
 import string
 
+import logging
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 world_city_file = '/data/worldcitiespop.txt'

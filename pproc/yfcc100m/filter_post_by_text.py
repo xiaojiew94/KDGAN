@@ -3,9 +3,9 @@ from utils import *
 from os import path
 
 import argparse
-import logging
 import pickle
 
+import logging
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 def get_count(in_tag_count, wn_tag_count, user_count):
@@ -17,14 +17,14 @@ def get_count(in_tag_count, wn_tag_count, user_count):
 
   num_post = 0
   tot_line = 0
-  with open(dataset_file) as fin:
+  with open(yfcc_dataset_file) as fin:
     while True:
       line = fin.readline()
       if not line:
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        logging.info('line#%09d %d' % (tot_line, num_post))
+        logging.info('#line=%09d #post=%d' % (tot_line, num_post))
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field

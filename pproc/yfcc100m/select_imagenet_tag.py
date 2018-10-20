@@ -8,11 +8,11 @@ from sys import stdout
 from urllib import request
 
 import argparse
-import logging
 import pickle
 import pycountry
 import re
 
+import logging
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 excluded_file = path.join(data_dir, 'in_excluded.txt')

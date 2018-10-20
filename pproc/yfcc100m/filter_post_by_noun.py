@@ -6,23 +6,23 @@ from os import path
 from sys import stdout
 
 import argparse
-import logging
 import pickle
 import string
 
+import logging
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 def get_count(in_tag_set, wn_tag_set):
   tot_line = 0
   user_count = {}
-  with open(dataset_file) as fin:
+  with open(yfcc_dataset_file) as fin:
     while True:
       line = fin.readline()
       if not line:
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        logging.info('line#%09d' % (tot_line))
+        logging.info('#line=%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field
@@ -45,14 +45,14 @@ def get_count(in_tag_set, wn_tag_set):
   num_post = 0
   in_tag_count, wn_tag_count = {}, {}
   user_count = {u:c for u,c in user_count.items() if c >= min_user}
-  with open(dataset_file) as fin:
+  with open(yfcc_dataset_file) as fin:
     while True:
       line = fin.readline()
       if not line:
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        logging.info('line#%09d' % (tot_line))
+        logging.info('#line=%09d' % (tot_line))
 
       fields = line.strip().split(sep_field)
       assert len(fields) == num_field
@@ -77,11 +77,11 @@ def get_count(in_tag_set, wn_tag_set):
         if tag in wn_tag_set:
           wn_tag_count[tag] = wn_tag_count.get(tag, 0) + 1
       num_post += 1
-  num_user = len(user_count)
   num_in_tag = len(in_tag_count)
   num_wn_tag = len(wn_tag_count)
-  logging.info('#user=%d #post=%d' % (num_user, num_post))
+  num_user = len(user_count)
   logging.info('#imagenet=%d #wordnet=%d' % (num_in_tag, num_wn_tag))
+  logging.info('#user=%d #post=%d' % (num_user, num_post))
   return in_tag_count, wn_tag_count, user_count
 
 def main():

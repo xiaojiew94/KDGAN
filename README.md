@@ -2,6 +2,9 @@
 
 knowledge distillation generative adversarial network  
 
+filter_post_by_text.py   #imagenet=1041 #wordnet=1784
+filter_post_by_text.py   #user=12942 #post=1157651
+
 ### Server
 
 ssh xiaojie@10.100.229.246 # cpu   
