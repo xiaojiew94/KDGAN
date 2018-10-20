@@ -21,7 +21,7 @@ def main(url_fold_file):
       image_url = line.strip()
       image_file = utils.get_image_file(image_fold_dir, image_url)
       tot_image += 1
-      if (tot_image % 1000) == 0:
+      if (tot_image % 100) == 0:
         logging.info('tot=%07d num=%d' % (tot_image, num_image))
       if path.isfile(image_file):
         num_image += 1
