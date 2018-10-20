@@ -36,3 +36,6 @@ def save_set_readable(item_set, outfile):
   with open(outfile, 'w') as fout:
     for item in sorted(item_set):
       fout.write('%s\n' % (item))
+
+def get_image_file(image_url):
+  pass
