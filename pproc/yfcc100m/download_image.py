@@ -1,5 +1,7 @@
 from utils import *
 
+import utils
+
 from os import path
 
 import argparse
@@ -10,13 +12,15 @@ import logging
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 def main(url_fold_file):
-  image_fold_dir = url_fold_file.replace('url_fold', 'image_fold')
+  image_fold_dir = url_fold_file.replace('url_', 'image_')
   print(image_fold_dir)
   with open(url_fold_file) as fin:
     for line in fin.readlines():
       image_url = line.strip()
-      print(image_url)
-      break
+      if not image_url.startswith('http://f'):
+        print(image_url)
+      # image_file = utils.get_image_file(image_fold_dir, image_url)
+
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
