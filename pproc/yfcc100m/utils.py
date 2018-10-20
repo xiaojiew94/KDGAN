@@ -24,6 +24,7 @@ idx_user = 3
 idx_title = 8
 idx_description = 9
 idx_tag = 10
+idx_image_url = 16
 idx_marker = 24
 sep_field = '\t'
 sep_tag = ','
