@@ -42,6 +42,7 @@ def main(num_fold):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('num_fold', type=int)
+  parser.add_argument('-o', '--override', action='store_true')
   args = parser.parse_args()
   if not path.isdir(flickr_image_dir) or args.override:
     main(args.num_fold)
