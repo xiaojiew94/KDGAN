@@ -25,7 +25,6 @@ def main():
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
-        break
         logging.info('#line=%09d #post=%d' % (tot_line, num_post))
 
       fields = line.strip().split(sep_field)
