@@ -38,5 +38,13 @@ def save_set_readable(item_set, outfile):
       fout.write('%s\n' % (item))
 
 def get_image_file(image_fold_dir, image_url):
-  pass
+  image_url = image_url.replace('http://', '')
+  image_file = path.join(image_fold_dir, *image_url.split('/'))
+  return image_file
+
+
+
+
+
+
 

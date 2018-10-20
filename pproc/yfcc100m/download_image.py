@@ -17,10 +17,10 @@ def main(url_fold_file):
   with open(url_fold_file) as fin:
     for line in fin.readlines():
       image_url = line.strip()
-      if not image_url.startswith('http://f'):
-        print(image_url)
-      # image_file = utils.get_image_file(image_fold_dir, image_url)
-
+      image_file = utils.get_image_file(image_fold_dir, image_url)
+      print(image_url)
+      print(image_file)
+      input()
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
