@@ -18,8 +18,10 @@ def main(url_fold_file):
     for line in fin.readlines():
       image_url = line.strip()
       image_file = utils.get_image_file(image_fold_dir, image_url)
+      image_dir = path.dirname(image_file)
       print(image_url)
       print(image_file)
+      print(image_dir)
       input()
 
 if __name__ == '__main__':
