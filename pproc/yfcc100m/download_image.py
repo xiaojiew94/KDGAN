@@ -20,7 +20,8 @@ def main(url_fold_file):
       image_url = line.strip()
       response = requests.get(image_url)
       print(image_url)
-      print(response.geturl())
+      print(response.url)
+      print(response.is_redirect)
       input()
       continue
       image_file = utils.get_image_file(image_fold_dir, image_url)
