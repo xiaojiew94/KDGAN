@@ -1,6 +1,7 @@
 from utils import *
 
 import argparse
+import os
 import pickle
 
 import logging
@@ -15,8 +16,28 @@ def main(num_fold):
         break
       tot_line += 1
 
-  fold_size = tot_line // num_fold
+  fold_size = tot_line // num_fold + 1
   logging.info('#line=%d #fold=%d' % (tot_line, fold_size))
+
+  tot_line = 0
+  os.makedirs(flickr_image_dir)
+  with open(yfcc_sample_file) as fin:
+    for fold in range(num_fold):
+      url_fold_file = path.join(flickr_image_dir, 'url_fold%d' % fold)
+      with open(url_fold_file, 'w') as fout:
+        for _ in range(fold_size):
+          line = fin.readline()
+          if not line:
+            logging.info('#line=%d break' % (tot_line))
+            break
+          tot_line += 1
+
+          fields = line.strip().split(sep_field)
+          image_url = fields[idx_image_url]
+          print(image_url)
+          input()
+
+
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
