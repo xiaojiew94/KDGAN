@@ -17,13 +17,15 @@ def main():
 
   num_post = 0
   tot_line = 0
-  with open(yfcc_dataset_file) as fin:
+  with open(yfcc_dataset_file) as fin, \
+       open(yfcc_sample_file, 'w') as fout:
     while True:
       line = fin.readline()
       if not line:
         break
       tot_line += 1
       if (tot_line % 20000000) == 0:
+        break
         logging.info('#line=%09d #post=%d' % (tot_line, num_post))
 
       fields = line.strip().split(sep_field)
@@ -53,6 +55,7 @@ def main():
       if not is_valid:
         continue
       num_post += 1
+      fout.write(line)
   logging.info('#line=%09d #post=%d' % (tot_line, num_post))
 
 if __name__ == '__main__':
