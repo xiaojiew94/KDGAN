@@ -24,7 +24,6 @@ def main(url_fold_file):
       if (tot_image % 100) == 0:
         logging.info('tot=%07d num=%d' % (tot_image, num_image))
       if path.isfile(image_file):
-        print(image_file)
         num_image += 1
         continue
       response = requests.get(image_url)
