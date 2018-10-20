@@ -34,10 +34,7 @@ def main(num_fold):
 
           fields = line.strip().split(sep_field)
           image_url = fields[idx_image_url]
-          print(image_url)
-          input()
-
-
+          fout.write('%s\n' % (image_url))
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
