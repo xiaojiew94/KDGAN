@@ -3,6 +3,7 @@ from os import path
 yfcc_dataset_file = '/data/yfcc100m/yfcc100m_dataset'
 yfcc_sample_file = '/data/yfcc100m/yfcc100m_sample'
 flickr_image_dir = '/data/yfcc100m/flickr_images'
+user_profile_dir = '/data/yfcc100m/user_profiles'
 
 data_dir = 'data'
 in_all_noun_rfile = path.join(data_dir, 'in_all_noun.r')
