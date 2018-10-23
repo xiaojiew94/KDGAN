@@ -24,8 +24,9 @@ def main(url_fold_file):
       if path.isfile(image_file):
         last_image_url = image_url
         last_image_file = image_file
-  print(last_image_url)
-  
+  print('last_image_url=%s' % (last_image_url))
+  print('last_image_file=%s' % (last_image_file))
+
   tot_image, num_image = 0, 0
   with open(url_fold_file) as fin:
     while True:
@@ -37,8 +38,7 @@ def main(url_fold_file):
       image_url = line.strip()
       if image_url == last_image_url:
         break
-    print(image_url)
-    exit()
+
     while True:
       line = fin.readline()
       if not line:
