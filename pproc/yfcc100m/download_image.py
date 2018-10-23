@@ -15,6 +15,16 @@ logging.basicConfig(level=logging.INFO, format=log_format)
 
 def main(url_fold_file):
   image_fold_dir = url_fold_file.replace('url_', 'image_')
+
+  with open(url_fold_file) as fin:
+    for line in fin.readlines():
+      image_url = line.strip()
+      image_file = utils.get_image_file(image_fold_dir, image_url)
+      if path.isfile(image_file):
+        latest_image_url = image_url
+  print(image_url)
+  exit()
+
   tot_image, num_image = 0, 0
   with open(url_fold_file) as fin:
     for line in fin.readlines():
