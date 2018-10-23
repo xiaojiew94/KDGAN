@@ -16,6 +16,7 @@ logging.basicConfig(level=logging.INFO, format=log_format)
 def main(url_fold_file):
   image_fold_dir = url_fold_file.replace('url_', 'image_')
 
+  last_image_url = None
   with open(url_fold_file) as fin:
     for line in fin.readlines():
       image_url = line.strip()
@@ -24,12 +25,24 @@ def main(url_fold_file):
         last_image_url = image_url
         last_image_file = image_file
   print(last_image_url)
-  print(last_image_file)
-  exit()
-
+  
   tot_image, num_image = 0, 0
   with open(url_fold_file) as fin:
-    for line in fin.readlines():
+    while True:
+      if not last_image_url:
+        break
+      line = fin.readline()
+      if not line:
+        break
+      image_url = line.strip()
+      if image_url == last_image_url:
+        break
+    print(image_url)
+    exit()
+    while True:
+      line = fin.readline()
+      if not line:
+        break
       image_url = line.strip()
       image_file = utils.get_image_file(image_fold_dir, image_url)
       tot_image += 1
