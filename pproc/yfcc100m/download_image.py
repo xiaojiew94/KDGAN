@@ -21,8 +21,10 @@ def main(url_fold_file):
       image_url = line.strip()
       image_file = utils.get_image_file(image_fold_dir, image_url)
       if path.isfile(image_file):
-        latest_image_url = image_url
-  print(image_url)
+        last_image_url = image_url
+        last_image_file = image_file
+  print(last_image_url)
+  print(last_image_file)
   exit()
 
   tot_image, num_image = 0, 0
