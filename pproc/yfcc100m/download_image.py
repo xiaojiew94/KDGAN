@@ -26,8 +26,14 @@ def main(url_fold_file):
       if path.isfile(image_file):
         num_image += 1
         continue
-      response = requests.get(image_url)
-      time.sleep(1)
+      while True:
+        try:
+          response = requests.get(image_url)
+          time.sleep(1)
+          break
+        except Exception:
+          time.sleep(10)
+          logging.info('retry %s' % (image_url))
       if image_url != response.url:
         continue
       image_dir = path.dirname(image_file)

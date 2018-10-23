@@ -25,10 +25,17 @@ def crawl(user):
             'nojsoncallback': '1',
             'method': 'flickr.people.getInfo',
             'user_id': user,}
-  response = requests.get(url_api, params=params)
-  info = json.loads(response.text)
+  while True:
+    response = requests.get(url_api, params=params)
+    try:
+      # profile = response.json()
+      profile = json.loads(response.text)
+      break
+    except ValueError:
+      logging.info('retry user %s' % (user))
+
   with open(user_file, 'w') as fout:
-      json.dump(info, fout)
+      json.dump(profile, fout)
 
 def main():
   if not path.exists(user_profile_dir):
