@@ -18,6 +18,7 @@ def main(url_fold_file):
   image_fold_dir = url_fold_file.replace('url_', 'image_')
 
   last_image_url = None
+  last_image_file = None
   with open(url_fold_file) as fin:
     for line in fin.readlines():
       image_url = line.strip()
@@ -37,6 +38,10 @@ def main(url_fold_file):
       if not line:
         break
       image_url = line.strip()
+      image_file = utils.get_image_file(image_fold_dir, image_url)
+      tot_image += 1
+      if path.isfile(image_file):
+        num_image += 1
       if image_url == last_image_url:
         break
 
@@ -47,9 +52,9 @@ def main(url_fold_file):
       image_url = line.strip()
       image_file = utils.get_image_file(image_fold_dir, image_url)
       tot_image += 1
-      if (tot_image % 100) == 0:
-        logging.info('tim=%s tot=%07d num=%d' % (
-            datetime.now(), tot_image, num_image))
+      if (tot_image % 5) == 0:
+        current = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        logging.info('%s tot=%07d num=%d' % (current, tot_image, num_image))
       if path.isfile(image_file):
         num_image += 1
         continue
