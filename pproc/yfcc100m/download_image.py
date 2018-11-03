@@ -60,6 +60,7 @@ def main(url_fold_file):
         continue
       while True:
         try:
+          # always stuck here
           response = requests.get(image_url)
           time.sleep(1)
           break
