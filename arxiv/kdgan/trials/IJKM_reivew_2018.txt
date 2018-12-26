@@ -1,0 +1,26 @@
+Popularity of the subject: 6
+Appropriateness for the journal: 8
+Adequacy of literature review: 9
+Quality of research design: 5
+Adequacy of data analysis: 6
+Contributions to the literature: 6
+Legitimacy of conclusions: 8
+Practical/managerial significance: 6
+Clarity of presentation: 10
+
+Overall Evaluation: Probably publishable
+
+Recommendations for Review: Manuscript requires minor revisions from author(s)
+
+Your Editorial Decision: Accept After Specified Revision
+
+This paper studies the organizational memory systems in a Brazilian multi-unit police organization – Policia Rodoviaria Federal. The authors characterize organizational memory systems based on three different elements: knowledge types, system structures and operational processes. According to the three elements, the authors find that most organizational memory systems in the police organization have only explicit knowledge types and are mostly dispersed.
+
+The paper proposes a novel method for categorizing organizational memory systems in both internal memory systems and external memory systems. This categorization method shows that organizational memory systems have a blurring dividing line between what people use and what organizations propose. 
+
+The data used in the paper is collected in two ways: one is questionnaires sent to administrative and operational employees in the policy organization, and the other is observations made by one of experienced staff among the authors. Based on the collected data, the authors show that external memory systems are used more often than internal memory systems.
+
+The authors use two methods for gathering the data: questionnaires and observations. How the results of questionnaires and the results of observations agree with each other? It would be better to compare questionnaire results and the observation results by some statistical methods.
+
+The paper tries to analyze when people need to access knowledge in organizational memory systems. However, the statistical analysis of when people need knowledge is insufficient in the paper. It would be better to include some tables and figures to show statistical characteristics of when people need to access knowledge.
+

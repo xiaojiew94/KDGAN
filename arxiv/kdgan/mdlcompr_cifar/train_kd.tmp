@@ -1,0 +1,65 @@
+dis/conv1/weights:0                                              added to DIS saver
+dis/conv1/biases:0                                               added to DIS saver
+dis/conv2/weights:0                                              added to DIS saver
+dis/conv2/biases:0                                               added to DIS saver
+dis/local3/weights:0                                             added to DIS saver
+dis/local3/biases:0                                              added to DIS saver
+dis/local4/weights:0                                             added to DIS saver
+dis/local4/biases:0                                              added to DIS saver
+dis/softmax_linear/weights:0                                     added to DIS saver
+dis/softmax_linear/biases:0                                      added to DIS saver
+#pre_losses wo regularization=1
+DIS regularization=dis/local3/weight_loss:0
+DIS regularization=dis/local4/weight_loss:0
+#pre_losses wt regularization=3
+#gan_losses wo regularization=2
+DIS regularization=dis/local3/weight_loss:0
+DIS regularization=dis/local4/weight_loss:0
+#gan_losses wt regularization=4
+std/conv1/weights:0                                              added to STD saver
+std/conv1/biases:0                                               added to STD saver
+std/conv2/weights:0                                              added to STD saver
+std/conv2/biases:0                                               added to STD saver
+std/local3/weights:0                                             added to STD saver
+std/local3/biases:0                                              added to STD saver
+std/local4/weights:0                                             added to STD saver
+std/local4/biases:0                                              added to STD saver
+std/softmax_linear/weights:0                                     added to STD saver
+std/softmax_linear/biases:0                                      added to STD saver
+#pre_losses wo regularization=1
+STD regularization=std/local3/weight_loss:0
+STD regularization=std/local4/weight_loss:0
+#pre_losses wt regularization=3
+#kd_losses wo regularization=2
+STD regularization=std/local3/weight_loss:0
+STD regularization=std/local4/weight_loss:0
+#kd_losses wt regularization=4
+#gan_losses wo regularization=1
+STD regularization=std/local3/weight_loss:0
+STD regularization=std/local4/weight_loss:0
+#gan_losses wt regularization=3
+#kdgan_losses wo regularization=3
+STD regularization=std/local3/weight_loss:0
+STD regularization=std/local4/weight_loss:0
+#kdgan_losses wt regularization=5
+dis/conv1/weights:0                                              (4800 params)
+dis/conv1/biases:0                                               (64 params)
+dis/conv2/weights:0                                              (102400 params)
+dis/conv2/biases:0                                               (64 params)
+dis/local3/weights:0                                             (1572864 params)
+dis/local3/biases:0                                              (384 params)
+dis/local4/weights:0                                             (73728 params)
+dis/local4/biases:0                                              (192 params)
+dis/softmax_linear/weights:0                                     (1920 params)
+dis/softmax_linear/biases:0                                      (10 params)
+std/conv1/weights:0                                              (4800 params)
+std/conv1/biases:0                                               (64 params)
+std/conv2/weights:0                                              (102400 params)
+std/conv2/biases:0                                               (64 params)
+std/local3/weights:0                                             (1572864 params)
+std/local3/biases:0                                              (384 params)
+std/local4/weights:0                                             (73728 params)
+std/local4/biases:0                                              (192 params)
+std/softmax_linear/weights:0                                     (1920 params)
+std/softmax_linear/biases:0                                      (10 params)
+gan                                                              (3512852 params)

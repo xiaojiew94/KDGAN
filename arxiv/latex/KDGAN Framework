@@ -1,0 +1,130 @@
+The ideal equilibrium where $\fullpstd{\OVEC{y}}=\fullpdat$ is guaranteed by KDGAN but is not guaranteed by KD in theory.
+A basic KD minimizes a distance measure $\kddist$ between the student and teacher such as the L2 loss on log probabilities \cite{ba2014deep}:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\LOSS{L}{KD}
+=
+\kddist(\fullpstd{\OVEC{y}}||\fullptch{\OVEC{y}})
+\text{,}
+\end{aligned}
+\end{equation}%
+% \end{small}%
+At the equilibrium in which $\kdloss=0$, since the pretrained teacher $\fullptch{\OVEC{y}}\neq\fullpdat$, we have:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\kdloss=0
+&
+\LOGEQ
+\fullpstd{\OVEC{y}}=\fullptch{\OVEC{y}}\neq\fullpdat
+\\
+\end{aligned}
+\end{equation}%
+% \end{small}%
+The basic KD is generalized in \cite{hinton2015distilling,lopez2015unifying} where the student is also trained to predict the true labels:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\kdloss
+=&
+(1-\lambda)\kldiv(\fullpstd{\OVEC{y}}||\fullpdat)
++
+\lambda\kldiv(\fullptch{\OVEC{y}}||\fullpdat)
+\\
+=&
+(1-\lambda){\textstyle\sum}_{\OVEC{y}}\,\fullpdat\log\fullpstd{\OVEC{y}}
++
+\lambda{\textstyle\sum}_{\OVEC{y}}\,\fullptch{\OVEC{y}}\log\fullpstd{\OVEC{y}}
++
+\text{const.}
+\\
+=&
+{\textstyle\sum}_{\OVEC{y}}
+((1-\lambda)\fullpdat+\lambda\fullptch{\OVEC{y}})\log\fullpstd{\OVEC{y}}
++
+\text{const.}
+\\
+=&
+\kldiv(\fullpstd{\OVEC{y}}||(1-\lambda)\fullpdat+\lambda\fullptch{\OVEC{y}})
+\text{,}
+\\
+\end{aligned}
+\end{equation}%
+% \end{small}%
+where $\lambda\in\interval[open left, open right]{0}{+\infty}$, $\kldiv$ is the Kullback–Leibler divergence, and the temperature is set to 1 for ease of presentation.
+At the equilibrium of KD, we still have:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\kdloss=0
+&
+\LOGEQ
+\fullpstd{\OVEC{y}}
+=
+(1-\lambda)\fullpdat+\lambda\fullptch{\OVEC{y}}
+\neq
+\fullpdat
+\\
+% &
+% \LOGEQ
+% \fullpstd{\OVEC{y}}-\fullpdat=\lambda(\fullptch{\OVEC{y}}-\fullpdat)\neq0
+% \text{,}
+% \\
+\end{aligned}
+\end{equation}%
+% \end{small}%
+In contrast, let $\fullpmix=\alpha\fullpstd{\OVEC{y}}+(1-\alpha)\fullptch{\OVEC{y}}$, the minimax game for KDGAN can be formulated as an optimization that minimizes (refer to Appendix \ref{app:theory}):
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\kdganloss
+=
+\kdgance(\fullpstd{\OVEC{y}}||\fullptch{\OVEC{y}})
++
+\kdganjs(\fullpdat||\fullpmix)
+\text{,}
+\end{aligned}
+\end{equation}%
+% \end{small}%
+where $\kdgance$ and $\kdganjs$ are distance measures resulting from KD and adversarial training in GAN.
+At the equilibrium of KDGAN, with further constraint imposed by GAN via $\kdganjs$, we have:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\kdganloss=0
+&
+\LOGEQ
+\kdganjs(\fullpdat||\fullpmix)=0
+\quad
+\text{and}
+\quad
+\kdgance(\fullpstd{\OVEC{y}}||\fullptch{\OVEC{y}})=0
+\\
+&
+\LOGEQ
+\fullpdat=\fullpmix
+\quad
+\text{and}
+\quad
+\fullpstd{\OVEC{y}}=\fullptch{\OVEC{y}}
+\\
+\end{aligned}
+\end{equation}%
+% \end{small}%
+After plugging $\fullpstd{\OVEC{y}}=\fullptch{\OVEC{y}}$ into $\fullpdat=\fullpmix$, we reach the ideal equilibrium:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\kdganloss=0
+&
+\LOGEQ
+\fullpstd{\OVEC{y}}=\fullpdat
+\quad
+\text{and}
+\quad
+\fullptch{\OVEC{y}}=\fullpdat
+\\
+\end{aligned}
+\end{equation}%
+% \end{small}%

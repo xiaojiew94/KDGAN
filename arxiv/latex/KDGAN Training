@@ -1,0 +1,84 @@
+In addition to the integration of KD and GAN, we further accelerate the training by relaxing the categorical distributions $\fullpstd{\OVEC{y}}$ and $\fullptch{\OVEC{y}}$ into concrete distributions.
+
+Following \cite{ba2014deep,wang2017irgan}, we compute the gradients for the student $\nabla_{s}\UTIL{}$ by adopting the policy gradient method and back-propagation algorithm to compute the gradients $\stdadvgrad$ and $\stddisgrad$ from the discriminator and teacher:
+% \begin{small}
+\begin{equation}
+% \begin{gather}
+\begin{aligned}
+\stdgrad
+\kdganabbrobj
+=
+\alpha
+% \underbrace{
+\EXP_{\OVEC{y}\sim\abbrpstd}
+[\stdgrad\log\fullpstd{\OVEC{y}}(\log(1-\fullpdis{\OVEC{y}})-b_{s})]
+% }_{\stdadvgrad}
++
+\beta
+% \underbrace{
+\stdgrad\DTN(\fullpstd{\OVEC{y}},\fullptch{\OVEC{y}})
+% }_{\stddisgrad}
+\text{,}
+\\
+\end{aligned}
+% \raisetag{200pt}
+% \end{gather}%
+\end{equation}%
+% \end{small}%
+where $b_{s}$ is a baseline function for variance reduction at training \cite{sutton2000policy}.
+
+As $\stddisgrad$ come from the soft labels and are typically non-zero with small variance, the student can obtain non-zero gradient update $\stddisgrad$ from the teacher when $\stdadvgrad$ from the discriminator vanish and reduce gradient variance by up-weighting $\stddisgrad$ when $\stdadvgrad$ from the discriminator explode.
+Although $\stddisgrad$ from the teacher help to reduce gradient variance, $\nabla_{s}\UTIL{}$ can still have high variance due to $\stdadvgrad$ \cite{arjovsky2017towards}, which will cause the training to have slow convergence and unstable behavior \cite{bottou2016optimization}.
+To further accelerate the training, we control the variance of $\stdadvgrad$ by relaxing the categorical distribution $\fullpstd{\OVEC{y}}$ into the concrete distribution $\fullqstd{\OVEC{y}}$ as:
+% \begin{small}
+\begin{equation} \label{equ:student concrete distribution}
+\begin{aligned}
+\fullqstd{\OVEC{y}}
+=
+% \text{softmax}({\textstyle\frac{\log\fullpstd{\OVEC{y}}+\OVEC{g}}{\tau}})
+\text{softmax}(\frac{\log\fullpstd{\OVEC{y}}+\OVEC{g}}{\tau})
+\text{, } \quad
+\OVEC{g}=-\log(-\log(\OVEC{u}))
+\text{, } \quad
+\OVEC{u}\sim\text{uniform}\interval[open left, open right]{0}{1}
+\text{,}
+\end{aligned}
+\end{equation}%
+% \end{small}%
+and approximate the gradients for the student as:
+% \begin{small}
+\begin{equation}
+\begin{aligned}
+\nabla_{s}
+\kdganabbrobj
+\approx
+% \alpha\EXP_{\OVEC{y}\sim\fullqstd{\OVEC{y}}}
+\alpha\EXP_{\OVEC{y}\sim\abbrqstd}
+[\nabla_{s}\log\fullqstd{\OVEC{y}}(\log(1-\fullpdis{\OVEC{y}})-b_{s})]
++
+\beta\nabla_{s}\DTN(\fullpstd{\OVEC{y}},\fullptch{\OVEC{y}})
+\text{,}
+\end{aligned}
+\end{equation}%
+% \end{small}%
+where $\tau\in\interval[open left, open right]{0}{+\infty}$ is called a temperature which controls the variance of $\stdadvgrad$.
+Since the concrete distribution with a high temperature is close to the uniform distribution, the samples from the concrete distribution are smooth, which can reduce the variance of $\stdadvgrad$.
+However, as the samples from the concrete distribution become smooth, the approximation of $\stdadvgrad$ is less exact, which can deteriorate the student performance.
+In experiments, we start with a high temperature at 1.0, which is annealed to a low temperature at 0.1.
+% The temperature parameter $\tau$ controls the tradeoff between the tightness of the relaxation and the variance of the gradients:
+With this change, the baseline function $b_{s}$ is redefined with respect to $\fullqstd{\OVEC{y}}$, e.g., a good choice for the baseline function is given by\cite{wang2017irgan}:
+% \begin{small}
+\begin{equation} \label{equ:baseline function}
+\begin{aligned}
+b_{s}
+=
+\EXP_{\OVEC{y}\sim\fullqstd{\OVEC{y}}}
+% \EXP_{\OVEC{y}\sim\abbrqstd}
+[\log(1-\fullpdis{\OVEC{y}})]
+=
+{\textstyle\sum}_{i=1}^{k}\log(1-\fullpdis{\SVEC{y}^{i}_{s}})
+\text{,}
+\end{aligned}
+\end{equation}%
+% \end{small}%
+where $\check{\OVEC{y}}$ is a one-hot label that encodes the argument of the maxima for a sample $\OVEC{y}\sim\fullqstd{\OVEC{y}}$.
