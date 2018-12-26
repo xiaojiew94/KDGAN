@@ -1,6 +1,7 @@
 ### KDGAN
 
 knowledge distillation generative adversarial network  
+https://github.com/cvtower/kdgan
 
 xiaojiew1@student.unimelb.edu.au
 Unit 1803, 280 Spencer Street
