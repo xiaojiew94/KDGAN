@@ -2,6 +2,14 @@
 
 knowledge distillation generative adversarial network  
 
+xiaojiew1@student.unimelb.edu.au
+Unit 1803, 280 Spencer Street
+5217295265283899
+
+### Extension
+
+Shakeout: A new approach to regularized deep neural network training
+
 ### Server
 
 ssh xiaojie@10.100.229.246 # cpu   
@@ -11,6 +19,22 @@ ssh xiaojie@10.100.228.158 # gpu cz
 ### Problem
 PermissionError: [Errno 13] Permission denied
 sudo chmod -R ugo+rw /data
+
+### Learning to learn
+conda create -n venv python=2.7
+pip install tensorflow==1.6.0
+pip install dm-sonnet==1.7
+pip install tensorflow-probability==0.0.1
+pip install dill
+python train.py --problem=quadratic --save_path=./quadratic
+
+
+### JointGAN
+pip install tensorflow==1.0.0
+pip install easydict nltk pandas prettytensor progressbar python-dateutil torchfile
+pip install git+git://github.com/bdusell/rougescore.git
+git clone git@github.com:tylin/coco-caption.git
+sys.path.append('Projects/kdgan/code/jointgan')
 
 
 ### YFCC100M
