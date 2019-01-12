@@ -1,0 +1,69 @@
+% node
+\node [rectangle] at (0.80,0.80) {$\OVEC{x}$};
+\node [rectangle] at (0.80,2.64) {$\OVEC{x}$};
+
+% line
+\draw [->,blue,thick] (0.96,0.80) -- (1.80,0.80);
+% \draw [->,blue,thick] (0.96,1.00) -- (1.80,1.00);
+\draw [->,red,thick] (0.96,2.64) -- (1.80,2.64);
+
+% line
+\draw [->,red,thick] (2.20,1.20) -- (2.20,2.24);
+\draw [->,red,thick] (2.20,3.04) -- (2.20,3.20);
+\draw [->,blue,thick] (3.40,0.40) -- (3.40,0.24) -- (9.20,0.24);
+\draw [->,blue,thick] (3.40,2.24) -- (3.40,1.20);
+
+% distillation losses
+\node [rectangle] at (10.68,0.24) {\small{$\tchdistloss(\fullptch{\OVEC{y}},\fullpstd{\OVEC{y}})$}};
+\node [rectangle] at (3.40,3.40) {\small{$\stddistloss(\fullpstd{\OVEC{y}},\fullptch{\OVEC{y}})$}};
+% teacher
+\node [teacher] (tch) at (2.80,0.80) {\small{Teacher}};
+\node [rectangle] at (1.96,0.56) {$\varrho$};
+% classifier
+\node [classifier] (std) at (2.80,2.64) {\small{Classifier}};
+% teacher soft labels
+\node [rectangle,fill=white] at (1.84,1.64) {\small{$\tchsoft=\fullptch{\OVEC{y}}$}};
+% classifier soft labels
+\node [rectangle,fill=white] at (3.76,1.64) {\small{$\stdsoft=\fullpstd{\OVEC{y}}$}};
+
+% discriminator label line
+\draw [->,green,thick] (3.80,1.12) -- (8.08,1.12) -- (8.08,2.32) -- (8.32,2.32);
+% \draw [->,green,thick] (7.00,1.72) -- (7.44,1.72) -- (7.44,2.64) -- (8.32,2.64);
+\draw [->,green,thick] (7.00,2.64) -- (8.32,2.64);
+\draw [->,green,thick] (3.80,2.96) -- (8.32,2.96);
+% discriminator feature line
+% \draw [->,green,thick] (7.32,0.48) -- (7.72,0.48) -- (8.72,0.94);
+% \draw [->,green,thick] (7.32,2.88) -- (7.72,2.88) -- (8.72,2.42);
+\draw [->,green,thick] (8.08,3.40) -- (8.32,3.20);
+% \draw [->,green,thick] (8.24,3.52) -- (8.32,3.20);
+
+% teacher pseudo labels
+\node [rectangle,fill=white] at (6.60,1.12) {\small{$\tchsample{}\sim\fullqtch{\OVEC{y}}$}};
+% the true labels
+\node [rectangle,fill=white] at (6.60,2.64) {\small{$\OVEC{y}\sim\fullpdat$}};
+% classifier pseudo labels
+\node [rectangle,fill=white] at (6.60,3.04) {\small{$\stdsample{}\sim\fullqstd{\OVEC{y}}$}};
+
+% discriminator
+% \node [discriminator] (dis) at (9.80,2.20) {\small{Discriminator}};
+\draw[fill=green!8] (8.32,2.08) -- (8.32,3.20) -- (10.32,3.04) -- (10.32,2.24) -- cycle;
+\node at (9.32,2.64) {\small{Discriminator}};
+\node at (8.48,2.24) {\small{$\varrho$}};
+% discriminator input node
+\node at (7.92,3.48) {\small{$\OVEC{x}$}};
+
+% line
+\draw [->,green,thick] (10.32,2.32) -- (10.56,2.32) -- (10.56,1.32);
+\draw [->,green,thick] (10.32,2.64) -- (10.80,2.64);
+\draw [->,green,thick] (10.32,2.96) -- (10.56,2.96) -- (10.56,3.28);
+
+\node at (10.56,1.12) {\small{$\negloss=\EXP_{\OVEC{y}\sim\abbrptch}[\log(1-\fullpdis{\OVEC{y}})]$}};
+\node at (12.60,2.64) {\small{$\posloss=\EXP_{\OVEC{y}\sim\abbrpdat}[\log\fullpdis{\OVEC{y}}]$}};
+\node at (10.56,3.48) {\small{$\negloss=\EXP_{\OVEC{y}\sim\abbrpstd}[\log(1-\fullpdis{\OVEC{y}})]$}};
+
+% kd
+\draw [-,thick,dotted] (0.60,0.32) -- (0.60,3.64) -- (5.00,3.64) -- (5.00,0.32) -- cycle;
+\node at (0.94,3.40) {KD};
+% gan
+\draw [-,thick,dotted] (1.72,2.00) -- (1.72,3.72) -- (14.48,3.72) -- (14.48,2.00) -- cycle;
+\node at (13.88,3.48) {BGAN};
