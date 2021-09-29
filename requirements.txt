@@ -5,6 +5,6 @@
 # pip install --ignore-installed -r requirements.txt
 # pip install -e .
 
-nltk==3.2.5
+nltk==3.6.3
 pycountry==18.5.26
 requests==2.20.0
